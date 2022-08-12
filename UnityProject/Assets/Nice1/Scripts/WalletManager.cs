@@ -113,31 +113,35 @@ public class WalletManager : Singleton<WalletManager>
         }
 
         yield return new WaitForSeconds(0);
-
-        //string url;
-        //if (checkNice1GenesisKey == 1)
-        //{
-        //    Debug.Log("CHECK NICE1 GENESIS KEY");
-        //    url = GetURL("niceonechain", owner, "niceoneepics");
-        //    yield return StartCoroutine(GetRequest(url));
-        //    GetLicense(owner, checkNice1GenesisKey: 1);
-        //    if (license == false)
-        //    {
-        //        Debug.Log("CHECK GAME LICENSE");
-        //        url = GetURL(AUTHOR, owner, CATEGORY);
-        //        yield return StartCoroutine(GetRequest(url));
-        //        GetLicense(owner, checkNice1GenesisKey: 0);
-        //    }
-        //}
-        //else
-        //{
-        //    Debug.Log("CHECK GAME LICENSE");
-        //    url = GetURL(AUTHOR, owner, CATEGORY);
-        //    yield return StartCoroutine(GetRequest(url));
-        //    GetLicense(owner, checkNice1GenesisKey: 0);
-        //}
-
     }
+
+    #region Deprecated
+
+    //private IEnumerator SearchAssetsByOwner(string owner)
+    //{
+    //string url;
+    //if (checkNice1GenesisKey == 1)
+    //{
+    //    Debug.Log("CHECK NICE1 GENESIS KEY");
+    //    url = GetURL("niceonechain", owner, "niceoneepics");
+    //    yield return StartCoroutine(GetRequest(url));
+    //    GetLicense(owner, checkNice1GenesisKey: 1);
+    //    if (license == false)
+    //    {
+    //        Debug.Log("CHECK GAME LICENSE");
+    //        url = GetURL(AUTHOR, owner, CATEGORY);
+    //        yield return StartCoroutine(GetRequest(url));
+    //        GetLicense(owner, checkNice1GenesisKey: 0);
+    //    }
+    //}
+    //else
+    //{
+    //    Debug.Log("CHECK GAME LICENSE");
+    //    url = GetURL(AUTHOR, owner, CATEGORY);
+    //    yield return StartCoroutine(GetRequest(url));
+    //    GetLicense(owner, checkNice1GenesisKey: 0);
+    //}
+    //}
 
     //private string GetURL(string author, string owner, string category)
     //{
@@ -262,6 +266,8 @@ public class WalletManager : Singleton<WalletManager>
     //    }
     //}
 
+    #endregion
+
     public void LicenseOK()
     {
         // TO DO: write your code here when License is OK
@@ -374,6 +380,7 @@ public class WalletManager : Singleton<WalletManager>
     #endregion
 }
 
+#region Data Model 
 
 [System.Serializable]
 public class WalletAccount
@@ -453,5 +460,7 @@ public class DataContainerDeltas
     public string owner;
     public string idata;
 }
+
+#endregion
 
 #endregion

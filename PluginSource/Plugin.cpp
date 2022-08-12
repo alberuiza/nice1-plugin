@@ -164,22 +164,30 @@ extern "C"
 		}
 	}
 
+	bool IsValid(JsonNode* node)
+	{
+		return node != nullptr && node;
+	}
+
 	const char* GetAuthorNameSimpleAssets(JsonNode* element)
 	{
 		char* author = nullptr;
 		JsonNode* authorMember = json_find_member(element, "author");
-		if (authorMember && authorMember->tag == JSON_STRING) {
+		if (IsValid(authorMember) && authorMember->tag == JSON_STRING) {
 			author = authorMember->string_;
 		}
 
 		JsonNode* tmp;
 		json_foreach(tmp, element)
 		{
-			JsonNode* nameMember = json_find_member(tmp, "name");
-			if (nameMember && nameMember->tag == JSON_STRING) {
-				char* name = nameMember->string_;
-				strcat(author, name);
-				break;
+			if (IsValid(tmp) && tmp->tag == JSON_OBJECT)
+			{
+				JsonNode* nameMember = json_find_member(tmp, "name");
+				if (IsValid(nameMember) && nameMember->tag == JSON_STRING) {
+					char* name = nameMember->string_;
+					strcat(author, name);
+					break;
+				}
 			}
 		}
 
@@ -191,17 +199,17 @@ extern "C"
 	{
 		JsonNode* data = json_find_member(element, "data");
 
-		if (data && data->tag == JSON_OBJECT)
+		if (IsValid(data) && data->tag == JSON_OBJECT)
 		{
 			char* author = nullptr;
 			JsonNode* authorMember = json_find_member(data, "author");
-			if (authorMember && authorMember->tag == JSON_STRING) {
+			if (IsValid(authorMember) && authorMember->tag == JSON_STRING) {
 				author = authorMember->string_;
 			}
 
 			char* idata = nullptr;
 			JsonNode* idataMember = json_find_member(data, "idata");
-			if (idataMember && idataMember->tag == JSON_STRING) {
+			if (IsValid(idataMember) && idataMember->tag == JSON_STRING) {
 				idata = idataMember->string_;
 
 				string name = idata; // {"name":"GAME LICENSE - LegendaryLegends"} 
@@ -234,7 +242,7 @@ extern "C"
 				JsonNode* element;
 				json_foreach(element, results)
 				{
-					if (element && element->tag == JSON_OBJECT)
+					if (IsValid(element) && element->tag == JSON_OBJECT)
 					{
 						char* authorNameChar = nullptr;
 						if (simpleAssets) authorNameChar = MakeStringCopy(GetAuthorNameSimpleAssets(element));
@@ -274,11 +282,6 @@ extern "C"
 
 	const char* CheckLicense(char* owner, char* author, char* category, char* license_name, int network)
 	{
-		//static char* ownerChar = MakeStringCopy("");
-		//static char* authorChar = MakeStringCopy("");
-		//static char* categoryChar = MakeStringCopy("");
-		//static char* license_nameChar = MakeStringCopy("");
-
 		const char* authorChar = MakeStringCopy(author);
 		const char* ownerChar = MakeStringCopy(owner);
 		const char* categoryChar = MakeStringCopy(category);
@@ -316,7 +319,7 @@ extern "C"
 			const char* response = CheckNice1GenesisKey(owner, network);
 			if (strcmp(response, "LICENSE") == 0)
 			{
-				return "LICENSE";
+				return "NICE1KEY";
 			}
 			else {
 				return CheckLicense(owner, author, category, license_name, network);
