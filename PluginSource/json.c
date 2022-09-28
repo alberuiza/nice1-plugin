@@ -40,7 +40,7 @@ static char *json_strdup(const char *str)
 	char *ret = (char*) malloc(strlen(str) + 1);
 	if (ret == NULL)
 		out_of_memory();
-	strcpy(ret, str);
+	strcpy_s(ret, strlen(str) + 1, str);
 	return ret;
 }
 
@@ -1169,7 +1169,8 @@ void emit_string(SB *out, const char *str)
 					 */
 					assert(false);
 					if (escape_unicode) {
-						strcpy(b, "\\uFFFD");
+						//strcpy(b, "\\uFFFD");
+						strcpy_s(b, strlen("\\uFFFD") + 1, "\\uFFFD");
 						b += 6;
 					} else {
 						*b++ = 0xEF;
@@ -1231,7 +1232,8 @@ static void emit_number(SB *out, double num)
 	 * like 0.3 -> 0.299999999999999988898 .
 	 */
 	char buf[64];
-	sprintf(buf, "%.16g", num);
+	//sprintf(buf, "%.16g", num);
+	sprintf_s(buf, "%.16g", num);
 	
 	if (number_is_valid(buf))
 		sb_puts(out, buf);

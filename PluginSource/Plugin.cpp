@@ -27,7 +27,8 @@ extern "C"
 	char* MakeStringCopy(const char* string) {
 		if (string == NULL) return NULL;
 		char* res = (char*)malloc(strlen(string) + 1);
-		strcpy(res, string);
+		//strcpy(res, string);
+		strcpy_s(res, strlen(string) + 1, string);
 		return res;
 	}
 
@@ -110,7 +111,8 @@ extern "C"
 				JsonNode* nameMember = json_find_member(tmp, "name");
 				if (IsValid(nameMember) && nameMember->tag == JSON_STRING) {
 					char* name = nameMember->string_;
-					strcat(author, name);
+					//strcat(author, name);
+					strcat_s(author, strlen(name)+1, name);
 					break;
 				}
 			}
@@ -145,7 +147,8 @@ extern "C"
 				index = name.find("\"");
 				name = name.substr(0, index); //GAME LICENSE - LegendaryLegends
 
-				strcat(author, name.c_str());
+				//strcat(author, name.c_str());
+				strcat_s(author, strlen(name.c_str()) + 1, name.c_str());
 			}
 			return author;
 		}
@@ -219,8 +222,10 @@ extern "C"
 		if (strcmp(curlResponse, CURL_REQUEST_ERROR_MESSAGE) == 0) return CURL_REQUEST_ERROR_MESSAGE;
 		
 		char* licenseCheck = (char*)malloc(strlen(authorChar) + strlen(license_nameChar) + 1);
-		strcpy(licenseCheck, authorChar);
-		strcpy(licenseCheck + strlen(authorChar), license_nameChar);
+		//strcpy(licenseCheck, authorChar);
+		strcpy_s(licenseCheck, strlen(authorChar)+strlen(license_nameChar) +1, authorChar);
+		//strcpy(licenseCheck + strlen(authorChar), license_nameChar);
+		strcpy_s(licenseCheck + strlen(authorChar), strlen(authorChar) + strlen(license_nameChar) + strlen(authorChar) + 1,  license_nameChar);
 		
 		return GetLicenseFromJson(curlResponse, licenseCheck);
 	}
