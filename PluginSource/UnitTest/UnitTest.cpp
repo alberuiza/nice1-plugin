@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "CppUnitTest.h"
+#include "../Plugin.cpp"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -9,8 +10,11 @@ namespace UnitTest
 	{
 	public:
 		
-		TEST_METHOD(TestMethod1)
+		TEST_METHOD(TestMakeStringCopy)
 		{
+			const char* str = "Test";
+			char *output = MakeStringCopy(str);
+			Assert::AreEqual(str, output);
 		}
 	};
 }
