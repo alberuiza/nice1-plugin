@@ -28,7 +28,10 @@ extern "C"
 		if (string == NULL) return NULL;
 		char* res = (char*)malloc(strlen(string) + 1);
 		//strcpy(res, string);
-		strcpy_s(res, strlen(string) + 1, string);
+		if (res != NULL)
+		{
+			strcpy_s(res, strlen(string) + 1, string);
+		}
 		return res;
 	}
 
