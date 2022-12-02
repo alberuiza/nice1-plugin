@@ -34,12 +34,12 @@ extern "C"
 	string networkEndpoints[] = {
 		"https://jungle3.api.simpleassets.io/v1/", // Jungle3 Testnet
 		"https://eos.api.simpleassets.io/v1/", // EOS Mainnet
-		"https://telostest.eu.eosamsterdam.net/v1", // Telos Testnet
+		"https://test.telos.eosusa.io/v2/", // Telos Testnet
 		"https://telos.api.simpleassets.io/v1/", // Telos Mainnet
-		"https://test.proton.eosusa.news/v2/", // Proton Testnet
-		"https://proton.greymass.com/v1/", // Proton Mainnet
-		"https://testnet.waxsweden.org/v2/", // WAX Testnet
-		"https://wax.eu.eosamsterdam.net/v2/" // WAX Mainnet
+		"https://test.proton.eosusa.io/v2/", // Proton Testnet
+		"https://proton.cryptolions.io/v2/", // Proton Mainnet
+		"https://testnet.waxsweden.org:443/v2/", // WAX Testnet
+		"https://wax.api.simpleassets.io/v1" // WAX Mainnet
 	};
 
 	bool simpleAssets;
@@ -236,7 +236,7 @@ extern "C"
 
 	EXPORT_API const char* CheckLicense2TEST(char* owner, char* author, char* category, char* license_name, int checkNice1GenesisKey, int network)
 	{
-		if (network == 0 || network == 1 || network == 3) simpleAssets = true;
+		if (network == 0 || network == 1 || network == 3 || network == 7) simpleAssets = true;
 		else simpleAssets = false;
 
 		if (checkNice1GenesisKey == 1)
