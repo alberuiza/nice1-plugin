@@ -35,15 +35,16 @@ extern "C"
 		return res;
 	}
 
+		
 	string networkEndpoints[] = {
-		"https://jungle3.api.simpleassets.io/v1/", // Jungle3 Testnet
-		"https://eos.api.simpleassets.io/v1/", // EOS Mainnet
+		"http://Jungle4.cryptolions.io", // Jungle4 Testnet
+		"https://eos.greymass.com", // EOS Mainnet
 		"https://test.telos.eosusa.io/v2/", // Telos Testnet
-		"https://telos.api.simpleassets.io/v1/", // Telos Mainnet
+		"https://telos.greymass.com", // Telos Mainnet
 		"https://test.proton.eosusa.io/v2/", // Proton Testnet
 		"https://proton.cryptolions.io/v2/", // Proton Mainnet
-		"https://testnet.waxsweden.org:443/v2/", // WAX Testnet
-		"https://wax.api.simpleassets.io/v1" // WAX Mainnet
+		"https://test.wax.eosusa.io", // WAX Testnet
+		"https://wax.greymass.com" // WAX Mainnet
 	};
 
 	bool simpleAssets;
