@@ -37,7 +37,7 @@ extern "C"
 
 		
 	string networkEndpoints[] = {
-		"http://Jungle4.cryptolions.io", // Jungle4 Testnet
+		"http://jungle4.greymass.com", // Jungle4 Testnet
 		"https://eos.greymass.com", // EOS Mainnet
 		"https://test.telos.eosusa.io/v2/", // Telos Testnet
 		"https://telos.greymass.com", // Telos Mainnet
@@ -57,7 +57,8 @@ extern "C"
 		string baseUrl = networkEndpoints[network];
 
 		if (simpleAssets)
-			baseUrl = baseUrl + "assets/search?author=" + authorChar + "&owner=" + ownerChar + "&category=" + categoryChar + "&page=1&limit=1000&sortField=assetId&sortOrder=asc";
+			//baseUrl = baseUrl + "assets/search?author=" + authorChar + "&owner=" + ownerChar + "&category=" + categoryChar + "&page=1&limit=1000&sortField=assetId&sortOrder=asc";
+			baseUrl = baseUrl + "/v1/chain/get_account";
 		else
 			baseUrl = baseUrl + "history/get_deltas?code=simpleassets&scope=" + ownerChar;
 

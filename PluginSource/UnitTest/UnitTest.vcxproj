@@ -172,6 +172,10 @@
       <Project>{6c051e3b-f2d1-49f1-9ad1-66e12fde1c6b}</Project>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\Inputs.txt" />
+    <Text Include="..\InputsDeltas.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

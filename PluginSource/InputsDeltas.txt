@@ -1,0 +1,72 @@
+#####GetAuthorNameDeltas#####
+
+element:
+	{
+		"timestamp":"2022-06-21T09:19:27.000",
+		"present":1,
+		"code":"simpleassets",
+		"scope":"thedemo1",
+		"table":"sassets",
+		"primary_key":"100000000000004",
+		"payer":"niceonedemos",
+		"block_num":139311379,
+		"block_id":"084db9131a1f69eb057f6b2c516c4914dc4338bcbed0eff5ace64db17a2a2208",
+		"data":
+			{"mdata_hash":"0c5022ef55796d35cd7a0e2be6f731967fa7e92280c19bc117b415479dbbee5a",
+			"author":"niceonedemos",
+			"id":"100000000000004",
+			"category":"llegends",
+			"owner":"thedemo1",
+			"idata":" {\"name\":\"GAME LICENSE - LegendaryLegends\"} ",
+			"mdata":"{\"img\":\"Qmdv7GB6Pnp23aB1H1mTB5xaxKWpGbbfwdLe5T3RBxruWV\"} ",
+			"container":[],
+			"containerf":[]}
+	}
+
+#####GetLicenseFromJson#####
+
+curlResponse:
+{
+	"query_time_ms":0.66,
+	"cached":true,
+	"total":{"value":1,"relation":"eq"},
+	"deltas":
+	[
+		{"timestamp":"2022-06-21T09:19:27.000",
+		"present":1,
+		"code":"simpleassets",
+		"scope":"thedemo1",
+		"table":"sassets",
+		"primary_key":"100000000000004",
+		"payer":"niceonedemos",
+		"block_num":139311379,
+		"block_id":"084db9131a1f69eb057f6b2c516c4914dc4338bcbed0eff5ace64db17a2a2208",
+		"data":
+			{"mdata_hash":"0c5022ef55796d35cd7a0e2be6f731967fa7e92280c19bc117b415479dbbee5a",
+			"author":"niceonedemos",
+			"id":"100000000000004",
+			"category":"llegends",
+			"owner":"thedemo1",
+			"idata":" {\"name\":\"GAME LICENSE - LegendaryLegends\"} ",
+			"mdata":"{\"img\":\"Qmdv7GB6Pnp23aB1H1mTB5xaxKWpGbbfwdLe5T3RBxruWV\"} ",
+			"container":[],
+			"containerf":[]}
+		}
+	]
+}
+
+	
+licenseCheck: niceonedemosGAME LICENSE - LegendaryLegends
+
+#####CheckLicense#####
+
+	owner: thedemo1
+	author: niceonedemos
+	category: llegends
+	licenseName: GAME LICENSE - LegendaryLegends
+	network: 4
+
+#####CheckNice1GenesisLicense#####
+
+	owner: thedemo1
+	network: 4

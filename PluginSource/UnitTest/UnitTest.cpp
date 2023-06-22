@@ -30,14 +30,14 @@ namespace UnitTest
 		TEST_METHOD(TestGetUrl)
 		{
 			const char* ownerChar = "test";
-			const char* authorChar = "test";
+			const char* authorChar = "niceonetest1";
 			const char* categoryChar = "test";
 			int network = 0;
 			const char* output = GetUrl(ownerChar, authorChar, categoryChar, network);
-			Assert::AreEqual("https://jungle3.api.simpleassets.io/v1/assets/search?author=test&owner=test&category=test&page=1&limit=1000&sortField=assetId&sortOrder=asc", output);
+			Assert::AreEqual("http://jungle4.greymass.com/v1/chain/get_account", output);
 			network = 1;
 			output = GetUrl(ownerChar, authorChar, categoryChar, network);
-			Assert::AreEqual("https://eos.api.simpleassets.io/v1/assets/search?author=test&owner=test&category=test&page=1&limit=1000&sortField=assetId&sortOrder=asc", output);
+			Assert::AreEqual("http://jungle4.greymass.com/history/get_deltas?code=simpleassets&scope=test", output);
 			// + networkEndpoints[]
 		}
 

@@ -1,0 +1,131 @@
+#####GetAuthorNameSimpleAssets#####
+
+element:
+	{
+		"_id":"61351d1e5aec6ad4399dcaa9",
+		"assetId":"100000000018276",
+		"__v":0,
+		"author":"niceonedemos",
+		"category":"llegends",
+		"container":[],
+		"containerf":[],
+		"dirty":false,
+		"dirtyScope":"",
+		"idata": {"name":"DARION - LegendaryLegends"},
+		"mdata":{"img":"QmbZQP5NUAA6RYG1Za9sfMC4qLJqxXAoybFr1ZiStxCoWW"},
+		"owner":"luiginortest",
+		"status":"ACTIVE",
+		"table":"sassets",
+		"extra":{"mintHash":"niceonedemos|llegends|548338f5cf5e673e6d68e8702dac7c95","totalMinted":100,"totalAvailable":100,"mintNumber":81}
+	}
+
+#####GetLicenseFromJson#####
+
+curlResponse:
+{	
+	"results":
+	[
+		{"_id":"61351d1e5aec6ad4399dcaa9",
+		"assetId":"100000000018276",
+		"__v":0,
+		"author":"niceonedemos",
+		"category":"llegends",
+		"container":[],
+		"containerf":[],
+		"dirty":false,
+		"dirtyScope":"",
+		"idata": {"name":"DARION - LegendaryLegends"},
+		"mdata":{"img":"QmbZQP5NUAA6RYG1Za9sfMC4qLJqxXAoybFr1ZiStxCoWW"},
+		"owner":"luiginortest",
+		"status":"ACTIVE",
+		"table":"sassets",
+		"extra":{"mintHash":"niceonedemos|llegends|548338f5cf5e673e6d68e8702dac7c95","totalMinted":100,"totalAvailable":100,"mintNumber":81}},
+		
+		{"_id":"61351f6b5aec6ad439bd73a4",
+		"assetId":"100000000018408",
+		"__v":0,
+		"author":"niceonedemos",
+		"category":"llegends",
+		"container":[],
+		"containerf":[],
+		"dirty":false,
+		"dirtyScope":"",
+		"idata": {"name":"GAME LICENSE - LegendaryLegends"},
+		"mdata":{"img":"Qmdv7GB6Pnp23aB1H1mTB5xaxKWpGbbfwdLe5T3RBxruWV"},
+		"owner":"luiginortest",
+		"status":"ACTIVE",
+		"table":"sassets",
+		"extra":{"mintHash":"niceonedemos|llegends|400e9fa57ecdb49b6ece3eb43697c48e","totalMinted":100,"totalAvailable":100,"mintNumber":13}},
+		
+		{"_id":"6295edb3bb8db6de4437a684",
+		"assetId":"100000000036896",
+		"__v":0,
+		"author":"niceonedemos",
+		"category":"llegends",
+		"container":[],
+		"containerf":[],
+		"dirty":false,
+		"dirtyScope":"",
+		"idata":
+			{"name":"EPIC KEY - LegendaryLegends",
+			"img":"QmQ8rT5gwm3co4xxdLQrzuD2hQX6CFr8EfSHz1zxn3Knb2"},
+		"mdata":{"name":"Test"},
+		"owner":"luiginortest",
+		"status":"ACTIVE",
+		"table":"sassets",
+		"extra":{"mintHash":"niceonedemos|llegends|e25c80df4381085b2931f47c269acc9f"}},
+		
+		{"_id":"6295edb3bb8db6de4437a6c2",
+		"assetId":"100000000036896",
+		"__v":0,
+		"author":"niceonedemos",
+		"category":"llegends",
+		"container":[],
+		"containerf":[],
+		"dirty":false,
+		"dirtyScope":"",
+		"idata":	
+			{"name":"EPIC KEY - LegendaryLegends",
+			"img":"QmQ8rT5gwm3co4xxdLQrzuD2hQX6CFr8EfSHz1zxn3Knb2"},
+		"mdata":{"name":"Test"},
+		"owner":"luiginortest",
+		"status":"ACTIVE",
+		"table":"sassets",
+		"extra":{"mintHash":"niceonedemos|llegends|e25c80df4381085b2931f47c269acc9f"}},
+		
+		{"_id":"6295fc42bb8db6de44f36ab3",
+		"assetId":"100000000036899",
+		"__v":0,
+		"author":"niceonedemos",
+		"category":"llegends",
+		"container":[],
+		"containerf":[],
+		"dirty":false,
+		"dirtyScope":"",
+		"idata":
+			{"name":"RARE KEY - LegendaryLegends",
+			"img":"QmZzGmEWEHt67Jt53YSoj8Q8bHfYfELkAofRiVaiHnA3MZ"},
+		"mdata":{"name":"Test"},
+		"owner":"luiginortest",
+		"status":"ACTIVE",
+		"table":"sassets",
+		"extra":{"mintHash":"niceonedemos|llegends|5d0668e7c1443cf3bda0d4e76e404fa5"}}
+	],
+		
+	"extra":{"total":5}
+}
+
+licenseCheck: niceonedemosGAME LICENSE - LegendaryLegends
+
+#####CheckLicense#####
+
+	owner: luiginortest
+	author: niceonedemos
+	category: llegends
+	licenseName: GAME LICENSE - LegendaryLegends
+	network: 0 (Jungle3_Testnet)	
+
+#####CheckNice1GenesisLicense#####
+
+	owner: luiginortest
+	network: 0 (Jungle3_Testnet)
