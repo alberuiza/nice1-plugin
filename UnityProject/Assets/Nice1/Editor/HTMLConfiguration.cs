@@ -15,8 +15,8 @@ public class HTMLConfiguration : Editor
     {
 		//https://support.greymass.com/support/solutions/articles/72000449566-list-of-blockchains-supported-by-anchor
         //EOS Testnet
-		"chainId: '2a02a0053e5a8cf73a56ba0fda11e4d92e0238a4a2aa74fccf46d5a910746840'," +
-        "nodeUrl: 'h1ttps://jungle3.cryptolions.io:443/'",
+		"chainId: '73e4385a2708e6d7048834fbc1079f2fabb17b3c125b146af438971e90716c4d'," +
+        "nodeUrl: 'https://jungle4.greymass.com/'",
         //EOS Mainnet
         "chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906'," +
         "nodeUrl: 'https://eos.greymass.com/'",

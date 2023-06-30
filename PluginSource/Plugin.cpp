@@ -13,8 +13,12 @@
 #include <curl/curl.h>
 #include "json.h"
 #include "json.c"
+#include <nlohmann/json.hpp>
+#include "JsonDataContainer.h"
 
+using namespace quicktype;
 using namespace std;
+using json = nlohmann::json;
 
 extern "C"
 {
@@ -35,7 +39,7 @@ extern "C"
 		return res;
 	}
 
-		
+
 	string networkEndpoints[] = {
 		"http://jungle4.greymass.com", // Jungle4 Testnet
 		"https://eos.greymass.com", // EOS Mainnet
@@ -117,7 +121,7 @@ extern "C"
 				if (IsValid(nameMember) && nameMember->tag == JSON_STRING) {
 					char* name = nameMember->string_;
 					//strcat(author, name);
-					strcat_s(author, strlen(name)+1, name);
+					strcat_s(author, strlen(name) + 1, name);
 					break;
 				}
 			}
@@ -220,18 +224,19 @@ extern "C"
 		const char* categoryChar = MakeStringCopy(category);
 		const char* license_nameChar = MakeStringCopy(license_name);
 
-		const char* url = GetUrl(ownerChar, authorChar, categoryChar, network);
-		
+		//const char* url = GetUrl(ownerChar, authorChar, categoryChar, network);
+		const char* url = MakeStringCopy(networkEndpoints[network].c_str());
+
 		const char* curlResponse = GetCurlResponse(url);
 		if (strcmp(curlResponse, CURL_INIT_ERROR_MESSAGE) == 0) return CURL_INIT_ERROR_MESSAGE;
 		if (strcmp(curlResponse, CURL_REQUEST_ERROR_MESSAGE) == 0) return CURL_REQUEST_ERROR_MESSAGE;
-		
+
 		char* licenseCheck = (char*)malloc(strlen(authorChar) + strlen(license_nameChar) + 1);
 		//strcpy(licenseCheck, authorChar);
-		strcpy_s(licenseCheck, strlen(authorChar)+strlen(license_nameChar) +1, authorChar);
+		strcpy_s(licenseCheck, strlen(authorChar) + strlen(license_nameChar) + 1, authorChar);
 		//strcpy(licenseCheck + strlen(authorChar), license_nameChar);
-		strcpy_s(licenseCheck + strlen(authorChar), strlen(authorChar) + strlen(license_nameChar) + strlen(authorChar) + 1,  license_nameChar);
-		
+		strcpy_s(licenseCheck + strlen(authorChar), strlen(authorChar) + strlen(license_nameChar) + strlen(authorChar) + 1, license_nameChar);
+
 		return GetLicenseFromJson(curlResponse, licenseCheck);
 	}
 
@@ -248,7 +253,7 @@ extern "C"
 	{
 		if (network == 0 || network == 1 || network == 3 || network == 7) simpleAssets = true;
 		else simpleAssets = false;
-
+		checkNice1GenesisKey = 0;
 		if (checkNice1GenesisKey == 1)
 		{
 			const char* response = CheckNice1GenesisKey(owner, network);
@@ -264,5 +269,62 @@ extern "C"
 		{
 			return CheckLicense(owner, author, category, license_name, network);
 		}
+	}
+
+	string AddBarBeforeDoubleQuote(string s) {
+		string other = "\\\"";
+
+		string::size_type pos = 0;
+
+		while (s.find("\"", pos) != std::string::npos) {
+			string::size_type found = s.find("\"", pos);
+			s.replace(found, 1, other);
+			pos = found + 2;
+		}
+
+		return s;
+	}
+
+	EXPORT_API const char* GetJsonData()
+	{
+		string res = "";
+
+		string networkEndpoint = "http://jungle4.greymass.com/v1/chain/get_table_rows";
+		CURL* curl;
+		CURLcode response;
+		unique_ptr<string> httpData(new string());
+		string jsonstr = "{\r\n    \"json\": true,\r\n    \"code\": \"simpleassets\",\r\n    \"scope\": \"niceonetest1\",\r\n    \"table\": \"sassets\",\r\n    \"index position\": \"secondary\",\r\n    \"key type\": \"name\",\r\n    \"lower bound\": \"niceonedemos\",\r\n    \"upper bound\": \"niceonedemos\",\r\n    \"limit\": 100,\r\n    \"reverse\": false,\r\n    \"show_payer\": false\r\n}";
+		curl_global_init(CURL_GLOBAL_ALL);
+		curl = curl_easy_init();
+		if (curl) {
+			curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, "POST");
+			curl_easy_setopt(curl, CURLOPT_URL, networkEndpoint.c_str());
+			curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
+			curl_easy_setopt(curl, CURLOPT_DEFAULT_PROTOCOL, "https");
+			curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
+			curl_easy_setopt(curl, CURLOPT_WRITEDATA, httpData.get());
+			struct curl_slist* headers = NULL;
+			headers = curl_slist_append(headers, "Content-Type: application/json");
+			curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
+
+			curl_easy_setopt(curl, CURLOPT_POSTFIELDS, jsonstr.c_str());
+			response = curl_easy_perform(curl);
+
+			if (response == CURLE_OK) {
+				char* result = MakeStringCopy(httpData.get()->c_str());
+
+				// Creamos el objeto de la clase
+				//json data1 = json::parse(result);
+				string fileName1 = "file.txt",
+					fileName2 = "file2.txt";
+
+				JsonDataContainer j = json::parse(result);
+
+				res = AddBarBeforeDoubleQuote(j.get_rows().at(0).get_idata());
+			}
+		}
+		curl_easy_cleanup(curl);
+
+		return MakeStringCopy(res.c_str());
 	}
 }

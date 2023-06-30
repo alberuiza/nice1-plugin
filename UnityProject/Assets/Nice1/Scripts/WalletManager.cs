@@ -19,6 +19,9 @@ public class WalletManager : Singleton<WalletManager>
     [DllImport("Nice1Plugin", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     private static extern IntPtr CheckLicense2TEST(string owner, string author, string category, string license_name, int checkNice1GenesisKey, int network);
 
+    [DllImport("Nice1Plugin", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+    private static extern IntPtr GetJsonData();
+
     #endregion
 
     #region UI Objects
@@ -37,7 +40,7 @@ public class WalletManager : Singleton<WalletManager>
 
     public enum Network
     {
-        Jungle3_Testnet, Eos_Mainnet, Telos_Testnet, Telos_Mainnet, Proton_Testnet, Proton_Mainnet, Wax_Testnet, Wax_Mainnet
+        Jungle4_Testnet, Eos_Mainnet, Telos_Testnet, Telos_Mainnet, Proton_Testnet, Proton_Mainnet, Wax_Testnet, Wax_Mainnet
     }
 
     [Header("Network")]
@@ -46,14 +49,14 @@ public class WalletManager : Singleton<WalletManager>
     // Telos testnet: https://telos-testnet.eosio.online/endpoints
     private List<string> networkEndpoints = new List<string>
     {
-        "https://jungle3.api.simpleassets.io/v1/",
+        "https://jungle4.greymass.com/",
         "https://eos.api.simpleassets.io/v1/",
         "https://telostest.eu.eosamsterdam.net/v1",
         "https://telos.api.simpleassets.io/v1/",
         "https://test.proton.eosusa.news/v2/",
         "https://proton.greymass.com/v1/",
         "https://testnet.waxsweden.org/v2/",
-		"https://wax.eu.eosamsterdam.net/v2/"
+        "https://wax.eu.eosamsterdam.net/v2/"
     };
 
     [Header("License - Mandatory fields")]
@@ -96,6 +99,20 @@ public class WalletManager : Singleton<WalletManager>
     {
         CurrentAccount.Initialize(name, null, null, null, false, null);
         StartCoroutine(SearchAssetsByOwner(name));
+    }
+
+    public void PruebaJson()
+    {
+        StartCoroutine(CorrutinaPruebaJson());
+    }
+
+    private IEnumerator CorrutinaPruebaJson()
+    {
+        string idataOne = Marshal.PtrToStringAnsi(GetJsonData());
+
+        Debug.Log(idataOne);
+
+        yield return new WaitForSeconds(0f);
     }
 
     private IEnumerator SearchAssetsByOwner(string owner)
