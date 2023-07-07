@@ -49,11 +49,11 @@ public class WalletManager : Singleton<WalletManager>
     // Telos testnet: https://telos-testnet.eosio.online/endpoints
     private List<string> networkEndpoints = new List<string>
     {
-        //"https://jungle4.greymass.com/",
-        "http://jungle4.greymass.com/v1/chain/get_table_rows",
-        "https://eos.api.simpleassets.io/v1/",
+        "https://jungle4.greymass.com/",
+        "https://eos.api.simpleassets.io/v1/", // No va
         "https://telostest.eu.eosamsterdam.net/v1",
-        "https://telos.api.simpleassets.io/v1/",
+        //"https://telos.api.simpleassets.io/v1/", // No va
+        "https://telostestnet.greymass.com/",
         "https://test.proton.eosusa.news/v2/",
         "https://proton.greymass.com/v1/",
         "https://testnet.waxsweden.org/v2/",

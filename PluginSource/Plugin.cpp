@@ -54,15 +54,18 @@ extern "C"
 	}
 
 	string networkEndpoints[] = {
-		// "http://jungle4.greymass.com", // Jungle4 Testnet
-		"http://jungle4.greymass.com/v1/chain/get_table_rows",
-		"https://eos.greymass.com", // EOS Mainnet
-		"https://test.telos.eosusa.io/v2/", // Telos Testnet
-		"https://telos.greymass.com", // Telos Mainnet
-		"https://test.proton.eosusa.io/v2/", // Proton Testnet
-		"https://proton.cryptolions.io/v2/", // Proton Mainnet
-		"https://test.wax.eosusa.io", // WAX Testnet
-		"https://wax.greymass.com" // WAX Mainnet
+		// "http://jungle4.greymass.com", // Jungle4 Testnet (commented)
+		"http://jungle4.greymass.com/v1/chain/get_table_rows", // Jungle4 Testnet
+		"https://eos.greymass.com/v1/chain/get_table_rows", // EOS Mainnet
+		//"https://test.telos.eosusa.io/v2/", // Telos Testnet (commented)
+		"https://telostest.eu.eosamsterdam.net/v1/chain/get_table_rows", // Telos Testnet
+		"https://telos.greymass.com/v1/chain/get_table_rows", // Telos Mainnet
+		//"https://test.proton.eosusa.io/v1/chain/get_table_rows", // Proton Testnet (commented)
+		"https://protontestnet.greymass.com/v1/chain/get_table_rows", // Proton Testnet
+		"https://proton.cryptolions.io/v1/chain/get_table_rows", // Proton Mainnet
+		//"https://test.wax.eosusa.io", // WAX Testnet (commented)
+		"https://testnet.waxsweden.org/v1/chain/get_table_rows", // WAX Testnet
+		"https://wax.greymass.com/v1/chain/get_table_rows" // WAX Mainnet
 	};
 
 	bool simpleAssets;
