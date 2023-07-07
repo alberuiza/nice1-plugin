@@ -39,9 +39,23 @@ extern "C"
 		return res;
 	}
 
+	string AddBarBeforeDoubleQuote(string s) {
+		string other = "\\\"";
+
+		string::size_type pos = 0;
+
+		while (s.find("\"", pos) != std::string::npos) {
+			string::size_type found = s.find("\"", pos);
+			s.replace(found, 1, other);
+			pos = found + 2;
+		}
+
+		return s;
+	}
 
 	string networkEndpoints[] = {
-		"http://jungle4.greymass.com", // Jungle4 Testnet
+		// "http://jungle4.greymass.com", // Jungle4 Testnet
+		"http://jungle4.greymass.com/v1/chain/get_table_rows",
 		"https://eos.greymass.com", // EOS Mainnet
 		"https://test.telos.eosusa.io/v2/", // Telos Testnet
 		"https://telos.greymass.com", // Telos Mainnet
@@ -69,26 +83,39 @@ extern "C"
 		return MakeStringCopy(baseUrl.c_str());
 	}
 
-	const char* GetCurlResponse(const char* url)
+	const char* GetCurlResponse(const char* url, char* owner)
 	{
 		CURL* curl;
 		CURLcode response;
-		string readBuffer;
+		//string readBuffer;
+		unique_ptr<string> httpData(new string());
+
+		string own = owner;
+
+		string jsonstr = "{\r\n    \"json\": true,\r\n    \"code\": \"simpleassets\",\r\n    \"scope\": \"" + own + "\",\r\n    \"table\": \"sassets\",\r\n    \"index position\": \"secondary\",\r\n    \"key type\": \"name\",\r\n    \"lower bound\": \"niceonedemos\",\r\n    \"upper bound\": \"niceonedemos\",\r\n    \"limit\": 100,\r\n    \"reverse\": false,\r\n    \"show_payer\": false\r\n}";
 
 		curl_global_init(CURL_GLOBAL_ALL);
 		curl = curl_easy_init();
 
 		if (curl) {
+			curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, "POST");
 			curl_easy_setopt(curl, CURLOPT_URL, url);
+			curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
+			curl_easy_setopt(curl, CURLOPT_DEFAULT_PROTOCOL, "https");
 			curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
-			curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
+			curl_easy_setopt(curl, CURLOPT_WRITEDATA, httpData.get());
+
+			struct curl_slist* headers = NULL;
+			headers = curl_slist_append(headers, "Content-Type: application/json");
+			curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
+			curl_easy_setopt(curl, CURLOPT_POSTFIELDS, jsonstr.c_str());
+
 			response = curl_easy_perform(curl);
 			curl_easy_cleanup(curl);
 			curl_global_cleanup();
 
 			if (response == 0) {
-				return MakeStringCopy(readBuffer.c_str());
-
+				return MakeStringCopy(httpData.get()->c_str());
 			}
 			else {
 				return MakeStringCopy(CURL_REQUEST_ERROR_MESSAGE + response);
@@ -217,6 +244,43 @@ extern "C"
 		}
 	}
 
+	const char* GetLicenseFromJsonData(const char* curlResponse, const char* licenseCheck, char* category)
+	{
+		JsonDataContainer jsonData = json::parse(curlResponse);
+
+		// Si no tenemos datos
+		if (jsonData.get_rows().size() == 0)
+			return "ERROR-NO-NFTS";
+
+		// Indica si presenta la licencia
+		bool license = false;
+
+		// Vamos filtrando entre las Row del json
+		for (Row row : jsonData.get_rows())
+		{
+			// Comparamos si contiene la misma categoría
+			// Y en caso afirmativo, comparamos con la licencia
+			if (strcmp(row.get_category().c_str(), category) == 0)
+			{
+				string licenseData = row.get_author() + row.get_idata().get_name();
+				if (strcmp(licenseData.c_str(), licenseCheck) == 0) {
+					license = true;
+					break;
+				}
+				else
+					license = false;
+			}
+		}
+
+		// Si tiene la licencia
+		if (license)
+			return "LICENSE";
+		// Si no
+		else
+			return "ERROR LICENSE";
+
+	}
+
 	const char* CheckLicense(char* owner, char* author, char* category, char* license_name, int network)
 	{
 		const char* authorChar = MakeStringCopy(author);
@@ -227,17 +291,21 @@ extern "C"
 		//const char* url = GetUrl(ownerChar, authorChar, categoryChar, network);
 		const char* url = MakeStringCopy(networkEndpoints[network].c_str());
 
-		const char* curlResponse = GetCurlResponse(url);
+		const char* curlResponse = GetCurlResponse(url, owner);
 		if (strcmp(curlResponse, CURL_INIT_ERROR_MESSAGE) == 0) return CURL_INIT_ERROR_MESSAGE;
 		if (strcmp(curlResponse, CURL_REQUEST_ERROR_MESSAGE) == 0) return CURL_REQUEST_ERROR_MESSAGE;
 
-		char* licenseCheck = (char*)malloc(strlen(authorChar) + strlen(license_nameChar) + 1);
-		//strcpy(licenseCheck, authorChar);
-		strcpy_s(licenseCheck, strlen(authorChar) + strlen(license_nameChar) + 1, authorChar);
-		//strcpy(licenseCheck + strlen(authorChar), license_nameChar);
-		strcpy_s(licenseCheck + strlen(authorChar), strlen(authorChar) + strlen(license_nameChar) + strlen(authorChar) + 1, license_nameChar);
+		string authorC = author;
+		string license_nameC = license_name;
+		string licenseCheck = authorC + license_nameC;
+		//char* licenseCheck = (char*)malloc(strlen(authorChar) + strlen(license_nameChar) + 1);
+		////strcpy(licenseCheck, authorChar);
+		//strcpy_s(licenseCheck, strlen(authorChar) + strlen(license_nameChar) + 1, authorChar);
+		////strcpy(licenseCheck + strlen(authorChar), license_nameChar);
+		//strcpy_s(licenseCheck + strlen(authorChar), strlen(authorChar) + strlen(license_nameChar) + strlen(authorChar) + 1, license_nameChar);
 
-		return GetLicenseFromJson(curlResponse, licenseCheck);
+		return GetLicenseFromJsonData(curlResponse, licenseCheck.c_str(), category);
+		//return GetLicenseFromJson(curlResponse, licenseCheck);
 	}
 
 	const char* CheckNice1GenesisKey(char* owner, int network)
@@ -271,25 +339,19 @@ extern "C"
 		}
 	}
 
-	string AddBarBeforeDoubleQuote(string s) {
-		string other = "\\\"";
 
-		string::size_type pos = 0;
 
-		while (s.find("\"", pos) != std::string::npos) {
-			string::size_type found = s.find("\"", pos);
-			s.replace(found, 1, other);
-			pos = found + 2;
-		}
-
-		return s;
-	}
-
-	EXPORT_API const char* GetJsonData()
+	EXPORT_API const char* GetJsonData(int network, char* category, char* author, char* license_name)
 	{
 		string res = "";
 
-		string networkEndpoint = "http://jungle4.greymass.com/v1/chain/get_table_rows";
+		string authorChar = MakeStringCopy(author);
+		string license_nameChar = MakeStringCopy(license_name);
+
+		string licenseCheck = authorChar + license_nameChar;
+
+		const char* networkEndpoint = networkEndpoints[network].c_str();
+		//networkEndpoint = "http://jungle4.greymass.com/v1/chain/get_table_rows";
 		CURL* curl;
 		CURLcode response;
 		unique_ptr<string> httpData(new string());
@@ -298,7 +360,7 @@ extern "C"
 		curl = curl_easy_init();
 		if (curl) {
 			curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, "POST");
-			curl_easy_setopt(curl, CURLOPT_URL, networkEndpoint.c_str());
+			curl_easy_setopt(curl, CURLOPT_URL, networkEndpoint);
 			curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
 			curl_easy_setopt(curl, CURLOPT_DEFAULT_PROTOCOL, "https");
 			curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
@@ -312,15 +374,33 @@ extern "C"
 
 			if (response == CURLE_OK) {
 				char* result = MakeStringCopy(httpData.get()->c_str());
-
-				// Creamos el objeto de la clase
-				//json data1 = json::parse(result);
-				string fileName1 = "file.txt",
-					fileName2 = "file2.txt";
-
 				JsonDataContainer j = json::parse(result);
 
-				res = AddBarBeforeDoubleQuote(j.get_rows().at(0).get_idata());
+				int contCategory = 0;
+				int contLicense = 0;
+				for (Row row : j.get_rows())
+				{
+					char* incategory = MakeStringCopy(row.get_category().c_str());
+					if (strcmp(incategory, category) == 0) {
+						contCategory++;
+
+						string authorRow = row.get_author();
+						string idata = row.get_idata().get_name();
+
+						string licenseData = authorRow + idata;
+
+						res += "Licencia: " + to_string(contCategory) + ": " + licenseData + "\n";
+
+						if (strcmp(licenseData.c_str(), licenseCheck.c_str()) == 0)
+							contLicense++;
+
+					}
+				}
+
+				res += "Hay " + to_string(contCategory) + " de la misma categoria.\n";
+				string license = licenseCheck;
+				res += "La licencia es: " + license + "\n";
+				res += "Hay " + to_string(contLicense) + " de la misma licencia.\n";
 			}
 		}
 		curl_easy_cleanup(curl);

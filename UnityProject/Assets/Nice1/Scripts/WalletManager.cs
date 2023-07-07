@@ -20,7 +20,7 @@ public class WalletManager : Singleton<WalletManager>
     private static extern IntPtr CheckLicense2TEST(string owner, string author, string category, string license_name, int checkNice1GenesisKey, int network);
 
     [DllImport("Nice1Plugin", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    private static extern IntPtr GetJsonData();
+    private static extern IntPtr GetJsonData(int network, string category, string author, string license_name);
 
     #endregion
 
@@ -49,7 +49,8 @@ public class WalletManager : Singleton<WalletManager>
     // Telos testnet: https://telos-testnet.eosio.online/endpoints
     private List<string> networkEndpoints = new List<string>
     {
-        "https://jungle4.greymass.com/",
+        //"https://jungle4.greymass.com/",
+        "http://jungle4.greymass.com/v1/chain/get_table_rows",
         "https://eos.api.simpleassets.io/v1/",
         "https://telostest.eu.eosamsterdam.net/v1",
         "https://telos.api.simpleassets.io/v1/",
@@ -108,7 +109,14 @@ public class WalletManager : Singleton<WalletManager>
 
     private IEnumerator CorrutinaPruebaJson()
     {
-        string idataOne = Marshal.PtrToStringAnsi(GetJsonData());
+        string datos = $"Los datos que se mandan son: \n" +
+            $"Red numero: {(int)network}\n" +
+            $"Categoria: {CATEGORY}\n" +
+            $"Autor: {AUTHOR}\n" +
+            $"Idata (licencia): {IDATA_NAME}\n";
+        Debug.Log(datos);
+
+        string idataOne = Marshal.PtrToStringAnsi(GetJsonData((int)network, CATEGORY, AUTHOR, IDATA_NAME));
 
         Debug.Log(idataOne);
 
