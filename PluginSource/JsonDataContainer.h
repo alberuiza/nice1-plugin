@@ -28,6 +28,20 @@ namespace quicktype {
 	inline json get_untyped(const json& j, std::string property) {
 		return get_untyped(j, property.data());
 	}
+
+	inline const std::string AddBarBeforeDoubleQuote(std::string s) {
+		std::string other = "\\\"";
+
+		std::string::size_type pos = 0;
+
+		while (s.find("\"", pos) != std::string::npos) {
+			std::string::size_type found = s.find("\"", pos);
+			s.replace(found, 1, other);
+			pos = found + 2;
+		}
+
+		return s;
+	}
 #endif
 
 	class Idata {
