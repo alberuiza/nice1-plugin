@@ -61,6 +61,9 @@ public class WalletManager : Singleton<WalletManager>
     [Header("Nice1 Genesis Key")]
     public bool checkNice1GenesisKey_bool;
 
+    [Header("FreeToPlay")]
+    public bool freeLicense_bool;
+
     [Header("License - Error message")]
     public string errorLicenseText = "You are not licensed to use this game";
 
@@ -92,7 +95,13 @@ public class WalletManager : Singleton<WalletManager>
     public void SetAccount(string name)
     {
         CurrentAccount.Initialize(name, null, null, null, false, null);
-        StartCoroutine(SearchAssetsByOwner(name));
+        if (freeLicense_bool)
+        {
+            Debug.Log("FREE LICENSE");
+            LicenseOK();
+        }
+        else
+            StartCoroutine(SearchAssetsByOwner(name));
     }
 
     private IEnumerator SearchAssetsByOwner(string owner)
