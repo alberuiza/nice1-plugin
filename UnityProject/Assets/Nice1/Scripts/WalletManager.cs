@@ -5,6 +5,7 @@ using UnityEngine.Networking;
 using UnityEngine.UI;
 using System.Runtime.InteropServices;
 using System;
+using static System.Net.WebRequestMethods;
 
 public class WalletManager : Singleton<WalletManager>
 {
@@ -50,8 +51,8 @@ public class WalletManager : Singleton<WalletManager>
         "https://protontestnet.greymass.com/v1/",
         "https://proton.cryptolions.io/v1/",
         "https://testnet.waxsweden.org/v1/",
-        "https://wax.greymass.com/v1/"
-        // TODO: Añadir TELOS al final
+        "https://wax.greymass.com/v1/",
+        "https://telos.greymass.com/v1/"
     };
 
     [Header("License - Mandatory fields")]
