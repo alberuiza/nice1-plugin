@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Nice1/Demos/Nice1Sample.unity
+    path: Assets/Nice1/Demos/Nice1CharacterSelectorSample.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   m_configObjects: {}

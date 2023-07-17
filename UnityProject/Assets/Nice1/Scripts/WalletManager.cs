@@ -51,6 +51,7 @@ public class WalletManager : Singleton<WalletManager>
         "https://proton.cryptolions.io/v1/",
         "https://testnet.waxsweden.org/v1/",
         "https://wax.greymass.com/v1/"
+        // TODO: Añadir TELOS al final
     };
 
     [Header("License - Mandatory fields")]
@@ -73,6 +74,12 @@ public class WalletManager : Singleton<WalletManager>
     [HideInInspector]
     public int checkNice1GenesisKey;
 
+    [HideInInspector]
+    public bool hasNice1Key { get; private set; }
+
+    [HideInInspector]
+    public string owner { get; private set; }
+
     #endregion
 
     public WalletAccount CurrentAccount { get; private set; }
@@ -86,6 +93,9 @@ public class WalletManager : Singleton<WalletManager>
 
     private void Awake()
     {
+        hasNice1Key = false;
+        owner = "";
+
         CurrentAccount = new WalletAccount();
         checkNice1GenesisKey = checkNice1GenesisKey_bool ? 1 : 0;
     }
@@ -111,6 +121,10 @@ public class WalletManager : Singleton<WalletManager>
         Debug.Log(licenseResult);
         if (licenseResult == "LICENSE" || licenseResult == "NICE1KEY")
         {
+            if (licenseResult.Equals("NICE1KEY"))
+                hasNice1Key = true;
+            this.owner = owner;
+
             LicenseOK();
         }
         else
@@ -205,7 +219,8 @@ public class WalletManager : Singleton<WalletManager>
 
     public void SetUserAccount(string userAccount)
     {
-        textUserAccount.text = userAccount;
+        if (textUserAccount != null)
+            textUserAccount.text = userAccount;
     }
 
     #endregion

@@ -4,14 +4,14 @@ public class UIPanel : MonoBehaviour
 {
     private CanvasGroup _panelCanvas;
 
-    private bool _isShowing = false;
+    internal bool _isShowing = false;
 
     private void Awake()
     {
         _panelCanvas = GetComponent<CanvasGroup>();
     }
 
-    public void ShowPanel()
+    public virtual void ShowPanel()
     {
         if (!_isShowing)
         {
@@ -24,7 +24,7 @@ public class UIPanel : MonoBehaviour
         }
     }
 
-    public void HidePanel()
+    public virtual void HidePanel()
     {
         if (_isShowing)
         {

@@ -240,10 +240,11 @@ extern "C"
 	{
 		if (network == 0 || network == 1 || network == 3 || network == 7) simpleAssets = true;
 		else simpleAssets = false;
-		checkNice1GenesisKey = 0;
+		//checkNice1GenesisKey = 0;
 		if (checkNice1GenesisKey == 1)
 		{
 			const char* response = CheckNice1GenesisKey(owner, network);
+
 			if (strcmp(response, "LICENSE") == 0)
 			{
 				return "NICE1KEY";
