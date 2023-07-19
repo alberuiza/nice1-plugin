@@ -38,7 +38,7 @@ public class WalletManager : Singleton<WalletManager>
 
     public enum Network
     {
-        Jungle4_Testnet, Eos_Mainnet, Proton_Testnet, Proton_Mainnet, Wax_Testnet, Wax_Mainnet
+        Jungle4_Testnet, Eos_Mainnet, Proton_Testnet, Proton_Mainnet, Wax_Testnet, Wax_Mainnet, Telos_Testnet, Telos_Mainnet
     }
 
     [Header("Network")]
@@ -52,7 +52,8 @@ public class WalletManager : Singleton<WalletManager>
         "https://proton.cryptolions.io/v1/",
         "https://testnet.waxsweden.org/v1/",
         "https://wax.greymass.com/v1/",
-        "https://test.telos.eosusa.io/"
+        "https://test.telos.eosusa.io/v1/",
+        "https://telos.greymass.com/v1/" 
     };
 
     [Header("License - Mandatory fields")]

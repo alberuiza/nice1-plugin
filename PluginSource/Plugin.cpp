@@ -45,7 +45,9 @@ extern "C"
 		"https://protontestnet.greymass.com/v1/chain/get_table_rows", // Proton Testnet
 		"https://proton.cryptolions.io/v1/chain/get_table_rows", // Proton Mainnet
 		"https://testnet.waxsweden.org/v1/chain/get_table_rows", // WAX Testnet
-		"https://wax.greymass.com/v1/chain/get_table_rows" // WAX Mainnet
+		"https://wax.greymass.com/v1/chain/get_table_rows", // WAX Mainnet
+		"https://test.telos.eosusa.io/v1/chain/get_table_rows", // TELOS Testnet
+		"https://telos.greymass.com/v1/chain/get_table_rows" // TELOS Mainnet
 	};
 
 	bool simpleAssets;
