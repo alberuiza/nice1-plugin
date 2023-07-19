@@ -52,7 +52,7 @@ public class WalletManager : Singleton<WalletManager>
         "https://proton.cryptolions.io/v1/",
         "https://testnet.waxsweden.org/v1/",
         "https://wax.greymass.com/v1/",
-        "https://telos.greymass.com/v1/"
+        "https://test.telos.eosusa.io/"
     };
 
     [Header("License - Mandatory fields")]
