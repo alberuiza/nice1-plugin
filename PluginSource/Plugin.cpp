@@ -22,12 +22,16 @@ using json = nlohmann::json;
 
 extern "C"
 {
+	// This function is used as a callback for the libcurl library and
+	// is responsible for receiving data received by the HTTP request
 	static size_t WriteCallback(void* contents, size_t size, size_t nmemb, void* userp)
 	{
 		((std::string*)userp)->append((char*)contents, size * nmemb);
 		return size * nmemb;
 	}
 
+	// This function takes a character string and creates a dynamic copy
+	// of it in memory, returning a pointer to the new block of memory
 	char* MakeStringCopy(const char* string) {
 		if (string == NULL) return NULL;
 		char* res = (char*)malloc(strlen(string) + 1);
@@ -176,20 +180,20 @@ extern "C"
 	{
 		JsonDataContainer jsonData = json::parse(curlResponse);
 
-		// Si no tenemos datos
+		// If we do not have data
 		if (jsonData.get_rows().size() == 0)
 			return "ERROR-NO-NFTS";
 
-		// Indica si presenta la licencia
+		// Indicates if it has the license
 		bool license = false;
 
-		// Vamos filtrando entre las Row del json
+		// We filter each row of the JSON
 		for (Row row : jsonData.get_rows())
 		{
-			// Comparamos si contiene la misma categoría
-			// Y en caso afirmativo, comparamos con la licencia
+			// Comparing the category
 			if (strcmp(row.get_category().c_str(), category) == 0)
 			{
+				// If the category matches, we compare it with the license
 				string licenseData = row.get_author() + row.get_idata().get_name();
 				if (strcmp(licenseData.c_str(), licenseCheck) == 0) {
 					license = true;
@@ -200,10 +204,10 @@ extern "C"
 			}
 		}
 
-		// Si tiene la licencia
+		// If it has a license
 		if (license)
 			return "LICENSE";
-		// Si no
+		// Otherwise
 		else
 			return "ERROR LICENSE";
 
