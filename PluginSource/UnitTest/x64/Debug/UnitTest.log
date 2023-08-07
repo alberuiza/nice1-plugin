@@ -1,0 +1,11 @@
+﻿  pch.cpp
+  UnitTest.cpp
+C:\Users\ddiaz\Desktop\Estudios\Practica\Proyects\nice1-plugin\PluginSource\json.c(102,24): warning C4267: 'argumento': conversión de 'size_t' a 'int'; posible pérdida de datos
+C:\Users\ddiaz\Desktop\Estudios\Practica\Proyects\nice1-plugin\PluginSource\json.c(1176,14): warning C4309: '=': truncamiento de valor constante
+C:\Users\ddiaz\Desktop\Estudios\Practica\Proyects\nice1-plugin\PluginSource\json.c(1177,14): warning C4309: '=': truncamiento de valor constante
+C:\Users\ddiaz\Desktop\Estudios\Practica\Proyects\nice1-plugin\PluginSource\json.c(1178,14): warning C4309: '=': truncamiento de valor constante
+C:\Users\ddiaz\Desktop\Estudios\Practica\Proyects\nice1-plugin\PluginSource\Plugin.cpp(165,15): warning C4267: 'inicializando': conversión de 'size_t' a 'int'; posible pérdida de datos
+C:\Users\ddiaz\Desktop\Estudios\Practica\Proyects\nice1-plugin\PluginSource\Plugin.cpp(167,22): warning C4267: '=': conversión de 'size_t' a 'int'; posible pérdida de datos
+C:\Users\ddiaz\Desktop\Estudios\Practica\Proyects\nice1-plugin\PluginSource\Plugin.cpp(169,22): warning C4267: '=': conversión de 'size_t' a 'int'; posible pérdida de datos
+     Creando biblioteca C:\Users\ddiaz\Desktop\Estudios\Practica\Proyects\nice1-plugin\PluginSource\Windows\x64\Debug\UnitTest.lib y objeto C:\Users\ddiaz\Desktop\Estudios\Practica\Proyects\nice1-plugin\PluginSource\Windows\x64\Debug\UnitTest.exp
+  UnitTest.vcxproj -> C:\Users\ddiaz\Desktop\Estudios\Practica\Proyects\nice1-plugin\PluginSource\Windows\x64\Debug\UnitTest.dll
