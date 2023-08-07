@@ -161,13 +161,13 @@ extern "C"
 			if (IsValid(idataMember) && idataMember->tag == JSON_STRING) {
 				idata = idataMember->string_;
 
-				string name = idata; // {"name":"GAME LICENSE - LegendaryLegends"} 
+				string name = idata; 
 				int index = name.find(":");
-				name = name.substr(index + 1, name.length() - index - 1); //"GAME LICENSE - LegendaryLegends"} 
+				name = name.substr(index + 1, name.length() - index - 1);
 				index = name.find("\"");
-				name = name.substr(index + 1, name.length() - index - 1); //GAME LICENSE - LegendaryLegends"} 
+				name = name.substr(index + 1, name.length() - index - 1);
 				index = name.find("\"");
-				name = name.substr(0, index); //GAME LICENSE - LegendaryLegends
+				name = name.substr(0, index);
 
 				strcat_s(author, strlen(name.c_str()) + 1, name.c_str());
 			}
@@ -246,7 +246,7 @@ extern "C"
 	{
 		if (network == 0 || network == 1 || network == 3 || network == 7) simpleAssets = true;
 		else simpleAssets = false;
-		//checkNice1GenesisKey = 0;
+		
 		if (checkNice1GenesisKey == 1)
 		{
 			const char* response = CheckNice1GenesisKey(owner, network);
