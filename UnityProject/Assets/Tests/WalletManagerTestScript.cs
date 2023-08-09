@@ -9,144 +9,124 @@ namespace Tests
 {
     public class WalletManagerTestScript
     {
+
         [Test]
-        public void TestFreeLicense()
+        public void InitializeTest()
         {
             WalletManager walletManager = new WalletManager();
+            walletManager.Initialize();
 
+            Assert.IsFalse(walletManager.hasNice1Key);
+        }
+
+        [Test]
+        public void WalletAccountInitializeTest()
+        {
+            string test = "nice1";
+            WalletAccount walletAccount = new WalletAccount();
+
+            walletAccount.Initialize(test, test, test, test, true, test);
+
+            Assert.AreEqual(test, walletAccount.name);
+            Assert.AreEqual(test, walletAccount.authority);
+            Assert.AreEqual(test, walletAccount.publicKey);
+            Assert.AreEqual(test, walletAccount.blockChain);
+            Assert.IsTrue(walletAccount.isHardware);
+            Assert.AreEqual(test, walletAccount.chainID);
+        }
+
+        [Test]
+        public void LicenseOKTest()
+        {
+            WalletManager walletManager = new WalletManager();
+            Assert.AreEqual("LICENSE", walletManager.LicenseOK());
+        }
+
+        [Test]
+        public void NO_LicenseTest()
+        {
+            WalletManager walletManager = new WalletManager();
+            Assert.AreEqual("NO LICENSE", walletManager.NO_License());
+        }
+
+        [Test]
+        public void SetAccountTest()
+        {
+            // Preparing data
+            WalletManager walletManager = new WalletManager();
+            walletManager.Initialize();
+            var values = Enum.GetValues(typeof(WalletManager.Network));
+            string owner = "";
+
+            // FREE LICENSES
             walletManager.freeLicense_bool = true;
-            walletManager.Initialize();
 
-            string license = walletManager.SetAccount("");
+            // Message: "LICENSE"
+            for (int i = 0; i < values.Length - 2; i += 2)
+            {
+                walletManager.network = (WalletManager.Network)values.GetValue(i);
+                Assert.AreEqual("LICENSE", walletManager.SetAccount(owner));
+            }
 
+            // NON-FREE LICENSES
+            walletManager.freeLicense_bool = false;
 
-            Assert.AreEqual(license, "LICENSE");
-        }
-
-        [Test]
-        public void TestJungle4TestnetAccountWithLicense()
-        {
-            // Preparing WalletManager
-            WalletManager walletManager = new WalletManager();
-
-            walletManager.network = WalletManager.Network.Jungle4_Testnet;
-            walletManager.Initialize();
-
-            // Preparing Test
-            string account = "niceonetest1";
-            string license = walletManager.SetAccount(account);
-            Assert.AreEqual(license, "LICENSE");
-        }
-
-        [Test]
-        public void TestJungle4TestnetAccountWithoutLicense()
-        {
-            // Preparing WalletManager
-            WalletManager walletManager = new WalletManager();
-
-            walletManager.network = WalletManager.Network.Jungle4_Testnet;
+            // WITHOUT NICE1 GENESIS KEY
+            // Message: "NO LICENSE"
             walletManager.IDATA_NAME = "No license";
-            walletManager.Initialize();
 
-            // Preparing test
-            string account = "niceonetest1";
-            string license = walletManager.SetAccount(account);
-            Assert.AreEqual(license, "NO LICENSE");
-        }
+            for (int i = 0; i < values.Length - 2; i += 2)
+            {
+                if (i == 0)
+                    owner = "niceonetest1";
+                else
+                    owner = "niceonedemos";
 
-        [Test]
-        public void TestProtonTestnetAccountWithLicense()
-        {
-            // Preparing WalletManager
-            WalletManager walletManager = new WalletManager();
+                Assert.AreEqual("NO LICENSE", walletManager.SetAccount(owner));
+            }
 
-            walletManager.network = WalletManager.Network.Proton_Testnet;
-            walletManager.Initialize();
+            // Message: "LICENSE"
+            walletManager.IDATA_NAME = "GameKey";
 
-            // Preparing Test
-            string account = "niceonedemos";
-            string license = walletManager.SetAccount(account);
-            Assert.AreEqual(license, "LICENSE");
-        }
+            for (int i = 0; i < values.Length - 2; i += 2)
+            {
+                walletManager.network = (WalletManager.Network)values.GetValue(i);
 
-        [Test]
-        public void TestProtonTestnetAccountWithoutLicense()
-        {
-            // Preparing WalletManager
-            WalletManager walletManager = new WalletManager();
+                if (i == 0)
+                    owner = "niceonetest1";
+                else
+                    owner = "niceonedemos";
 
-            walletManager.network = WalletManager.Network.Proton_Testnet;
+                Assert.AreEqual("LICENSE", walletManager.SetAccount(owner));
+            }
+
+            // WITH NICE1 GENESIS KEY
+            walletManager.checkNice1GenesisKey = 1;
+
+            // Message: "NO LICENSE"
             walletManager.IDATA_NAME = "No license";
-            walletManager.Initialize();
+            owner = "testnice1";
 
-            // Preparing Test
-            string account = "niceonedemos";
-            string license = walletManager.SetAccount(account);
-            Assert.AreEqual(license, "NO LICENSE");
-        }
+            for (int i = 0; i < values.Length - 2; i += 2)
+            {
+                Assert.AreEqual("NO LICENSE", walletManager.SetAccount(owner));
+            }
 
-        [Test]
-        public void TestWaxTestnetAccountWithLicense()
-        {
-            // Preparing WalletManager
-            WalletManager walletManager = new WalletManager();
+            // Message: "LICENSE"
+            walletManager.IDATA_NAME = "testnice1";
 
-            walletManager.network = WalletManager.Network.Wax_Testnet;
-            walletManager.Initialize();
+            for (int i = 0; i < values.Length - 2; i += 2)
+            {
+                walletManager.network = (WalletManager.Network)values.GetValue(i);
 
-            // Preparing Test
-            string account = "niceonedemos";
-            string license = walletManager.SetAccount(account);
-            Assert.AreEqual(license, "LICENSE");
-        }
+                if (i == 0)
+                    owner = "niceonetest1";
+                else
+                    owner = "niceonedemos";
 
-        [Test]
-        public void TestWaxTestnetAccountWithoutLicense()
-        {
-            // Preparing WalletManager
-            WalletManager walletManager = new WalletManager();
+                Assert.AreEqual("LICENSE", walletManager.SetAccount(owner));
+            }
 
-            walletManager.network = WalletManager.Network.Wax_Testnet;
-            walletManager.IDATA_NAME = "No license";
-            walletManager.Initialize();
-
-            // Preparing Test
-            string account = "niceonedemos";
-            string license = walletManager.SetAccount(account);
-            Assert.AreEqual(license, "NO LICENSE");
-        }
-
-        [Test]
-        public void TestTelosTestnetAccountWithLicense()
-        {
-            // Preparing WalletManager
-            WalletManager walletManager = new WalletManager();
-
-            walletManager.network = WalletManager.Network.Telos_Testnet;
-            walletManager.Initialize();
-
-            // Preparing Test
-            //string account = "niceonedemos";
-            //string license = walletManager.SetAccount(account);
-            string license = "";
-            Assert.AreEqual(license, "LICENSE");
-        }
-
-        [Test]
-        public void TestTelosTestnetAccountWithoutLicense()
-        {
-            // Preparing WalletManager
-            WalletManager walletManager = new WalletManager();
-
-            walletManager.network = WalletManager.Network.Telos_Testnet;
-            walletManager.IDATA_NAME = "No license";
-            walletManager.Initialize();
-
-            // Preparing Test
-            //string account = "niceonedemos";
-            //string license = walletManager.SetAccount(account);
-            string license = "";
-            Assert.AreEqual(license, "NO LICENSE");
         }
 
     }
@@ -242,7 +222,6 @@ namespace Tests
             CurrentAccount.Initialize(name, null, null, null, false, null);
             if (freeLicense_bool)
             {
-                Debug.Log("FREE LICENSE");
                 res = LicenseOK();
             }
             else
@@ -256,8 +235,6 @@ namespace Tests
             string licenseResult = Marshal.PtrToStringAnsi(CheckLicensePlugin(owner, AUTHOR, CATEGORY, IDATA_NAME, checkNice1GenesisKey, (int)network));
 
             string res = "";
-
-            Debug.Log($"Owner: {owner}");
 
             if (licenseResult == "LICENSE" || licenseResult == "NICE1KEY")
             {
@@ -282,8 +259,6 @@ namespace Tests
 
         public string NO_License()
         {
-            // if (OnNoLicense != null) OnNoLicense();
-            owner = "No License";
 
             return "NO LICENSE";
         }
