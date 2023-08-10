@@ -68,7 +68,7 @@ public class CharacterLoader : MonoBehaviour
 
     private void SetClick()
     {
-        button.onClick.AddListener(() => { Debug.Log("He pulsado " + characterName.text); });
+        button.onClick.AddListener(() => { Debug.Log("I pressed " + characterName.text); });
     }
 
     #endregion
