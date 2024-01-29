@@ -9,7 +9,7 @@
 
 #pragma once
 
-#include <nlohmann/json.hpp>
+#include "json.hpp"
 #include <stdexcept>
 #include <regex>
 
