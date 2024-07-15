@@ -14,6 +14,14 @@ The goal of NICE1 is to offer multi-services to all worldwide developers, relate
 Documentation for developers: https://docs.nice1.dev/
 
 
+## Dependencies
+All the dependencies are contained in this repository. 
+
+# UniversalAuthenticatorLibraryUnity
+A native UAL developed by Liquiidio (https://github.com/liquiidio/UniversalAuthenticatorLibraryUnity) is being used. 
+Thanks for their support and developments.
+
+
 # UnitTest - Nice1 plugin
     TestMakeStringCopy:
         Method Name: TestMakeStringCopy
