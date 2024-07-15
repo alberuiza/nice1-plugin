@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEditor;
 using UnityEngine;
-using Vuplex.WebView;
 
 namespace Scriptables
 {

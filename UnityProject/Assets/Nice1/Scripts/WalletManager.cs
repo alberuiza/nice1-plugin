@@ -180,7 +180,7 @@ public class WalletManager : Singleton<WalletManager>
     public async void LogOut()
     {
 #if VUPLEX_STANDALONE
-        await GameObject.FindGameObjectWithTag("canvasWebView").GetComponent<Vuplex.WebView.CanvasWebViewPrefab>().LogOut2();
+        //await GameObject.FindGameObjectWithTag("canvasWebView").GetComponent<Vuplex.WebView.CanvasWebViewPrefab>().LogOut2();
 #endif
         SetNotLoggedInMenu();
     }
