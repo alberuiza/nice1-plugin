@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using AnchorLinkSharp;
 using AnchorLinkTransportSharp.Src;
@@ -17,6 +18,21 @@ using UniversalAuthenticatorLibrary;
 
 public class Nice1LoginCanvas : MonoBehaviour
 {
+
+    #region DLL Imports
+
+    [DllImport("Nice1Plugin", CallingConvention = CallingConvention.Cdecl)]
+    private static extern int CheckLicense(string owner, string author, string category, string license_name, string idata_name);
+
+    [DllImport("Nice1Plugin", CallingConvention = CallingConvention.Cdecl)]
+    private static extern int CheckNice1GenesisKey(string owner, string author, string category, string license_name, string idata_name, int checkNice1GenesisKey);
+
+    [DllImport("Nice1Plugin", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+    private static extern IntPtr CheckLicensePlugin(string owner, string author, string category, string license_name, int checkNice1GenesisKey, int network);
+
+    #endregion
+
+    #region UI Objects
     /// <summary>
     /// Assign UnityTransport through the Editor
     /// </summary>
@@ -39,6 +55,15 @@ public class Nice1LoginCanvas : MonoBehaviour
 
     /// the session instance, either restored using link.restoreSession() or created with link.login()
     private LinkSession _session;
+
+    [HideInInspector]
+    public bool hasNice1Key { get; private set; }
+
+    [HideInInspector]
+    public string owner { get; private set; }
+    #endregion
+
+    #region License Parameters
     public enum Network
     {
         Jungle4, Eos, Proton_testnet, Proton, Wax_testnet, Wax, Telos_testnet, Telos
@@ -79,7 +104,11 @@ public class Nice1LoginCanvas : MonoBehaviour
     [Header("FreeToPlay")]
     public bool freeLicense_bool;
 
+    #endregion
+
     private EventSystem _canvasEventSystem;
+
+    public WalletAccount CurrentAccount { get; private set; }
 
     private void Start()
     {
@@ -91,6 +120,7 @@ public class Nice1LoginCanvas : MonoBehaviour
             print("added");
         }
         _canvasEventSystem = EventSystem.current;
+        CurrentAccount = new WalletAccount();
     }
     /// Initialize a new session
     public async void StartSession()
@@ -164,6 +194,7 @@ public class Nice1LoginCanvas : MonoBehaviour
     private void DidLogin()
     {
         Debug.Log($"{_session.Auth.actor} logged-in");
+        SetAccount(_session.Auth.actor);
 
     }
 
@@ -188,5 +219,67 @@ public class Nice1LoginCanvas : MonoBehaviour
         if (_canvasEventSystem.currentSelectedGameObject?.GetComponent<TMP_InputField>() != null)
             _canvasEventSystem.currentSelectedGameObject.GetComponent<TMP_InputField>().text = pastedText;
     }
+
+    #region License 
+
+    public void SetAccount(string name)
+    {
+        CurrentAccount.Initialize(name, null, null, null, false, null);
+        if (freeLicense_bool)
+        {
+            Debug.Log("FREE LICENSE");
+            LicenseOK();
+        }
+        else
+            StartCoroutine(SearchAssetsByOwner(name));
+    }
+
+    private IEnumerator SearchAssetsByOwner(string owner)
+    {
+        string licenseResult = Marshal.PtrToStringAnsi(CheckLicensePlugin(owner, AUTHOR, CATEGORY, IDATA_NAME, Convert.ToInt32(checkNice1GenesisKey_bool), (int)network));
+
+        Debug.Log(licenseResult);
+        if (licenseResult == "LICENSE" || licenseResult == "NICE1KEY")
+        {
+            if (licenseResult.Equals("NICE1KEY"))
+                hasNice1Key = true;
+            this.owner = owner;
+
+            LicenseOK();
+        }
+        else
+        {
+            NO_License();
+        }
+
+        yield return new WaitForSeconds(0);
+    }
+
+    public void LicenseOK()
+    {
+        // TO DO: write your code here when License is OK
+        // EXAMPLE
+        Debug.Log("LICENSE");
+        // TODO
+        //HideLogin();
+        //SetLoggedInMenu();
+        //SetUserAccount(CurrentAccount.name);
+        //ShowUser();
+        // Start your game
+        // - Got to other scene
+        // - Deactivate Canvas
+    }
+
+    public void NO_License()
+    {
+        // TO DO: write your code here when License is not OK
+        Debug.Log("NO LICENSE");
+       /* if (OnNoLicense != null) OnNoLicense();
+        HideLogin();
+        SetUserAccount("No License");
+        ShowUser();*/
+    }
+
+    #endregion
 }
 
