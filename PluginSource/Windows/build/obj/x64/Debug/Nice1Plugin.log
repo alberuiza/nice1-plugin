@@ -1,0 +1,13 @@
+﻿  Plugin.cpp
+C:\dev\Nice1\Nice1Repo\PluginSource\json.c(102,24): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\dev\Nice1\Nice1Repo\PluginSource\json.c(1176,14): warning C4309: '=': truncation of constant value
+C:\dev\Nice1\Nice1Repo\PluginSource\json.c(1177,14): warning C4309: '=': truncation of constant value
+C:\dev\Nice1\Nice1Repo\PluginSource\json.c(1178,14): warning C4309: '=': truncation of constant value
+C:\dev\Nice1\Nice1Repo\PluginSource\Plugin.cpp(130,15): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\dev\Nice1\Nice1Repo\PluginSource\Plugin.cpp(132,22): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\dev\Nice1\Nice1Repo\PluginSource\Plugin.cpp(134,22): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+  Nice1Plugin.vcxproj -> C:\dev\Nice1\Nice1Repo\PluginSource\Windows\build\bin\x64\Debug\Nice1Plugin.dll
+  C:\dev\Nice1\Nice1Repo\PluginSource\Windows\\build\bin\x64\Debug\Nice1Plugin.dll
+  1 File(s) copied
+  C:\dev\Nice1\Nice1Repo\PluginSource\Windows\\build\bin\x64\Debug\Nice1Plugin.pdb
+  1 File(s) copied

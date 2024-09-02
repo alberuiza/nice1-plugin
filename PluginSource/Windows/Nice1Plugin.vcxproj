@@ -19,10 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Plugin.cpp" />
+    <ClInclude Include="..\Plugin.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <ClCompile Include="..\Plugin.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -102,14 +102,17 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;NICE1PLUGIN_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;NICE1PLUGIN_EXPORTS;_WINDOWS;_USRDLL;CURL_STATICLIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <SupportJustMyCode>false</SupportJustMyCode>
+      <AdditionalIncludeDirectories>$(SolutionDir)\dependencies\libcurl-vc-x64-release-static-ipv6\include\;$(SolutionDir)\dependencies\nlohmann-json\include\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
+      <AdditionalLibraryDirectories>$(SolutionDir)\dependencies\libcurl-vc-x64-release-static-ipv6\lib\</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libcurl_a.lib;advapi32.lib;crypt32.lib;normaliz.lib;ws2_32.lib;wldap32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /y "$(OutDir)Nice1Plugin.dll" "$(SolutionDir)..\..\Unity Project\Assets\Plugins\Windows\$(PlatformShortName)\" &amp;&amp; xcopy /y "$(OutDir)Nice1Plugin.pdb" "$(SolutionDir)..\..\Unity Project\Assets\Plugins\Windows\$(PlatformShortName)\"</Command>
@@ -121,15 +124,17 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;NICE1PLUGIN_EXPORTS;_WINDOWS;_USRDLL;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;NICE1PLUGIN_EXPORTS;_WINDOWS;_USRDLL;CURL_STATICLIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <OmitFramePointers>false</OmitFramePointers>
-      <AdditionalIncludeDirectories>C:\Users\alberto\Downloads\curl-7.83.1\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\dependencies\libcurl-vc-x64-release-static-ipv6\include\;$(SolutionDir)\dependencies\nlohmann-json\include\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
+      <AdditionalLibraryDirectories>$(SolutionDir)\dependencies\libcurl-vc-x64-release-static-ipv6\lib\</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libcurl_a.lib;advapi32.lib;crypt32.lib;normaliz.lib;ws2_32.lib;wldap32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /y "$(OutDir)Nice1Plugin.dll" "$(SolutionDir)..\..\UnityProject\Assets\Nice1\Plugins\Windows\$(PlatformShortName)\" &amp;&amp; xcopy /y "$(OutDir)Nice1Plugin.pdb" "$(SolutionDir)..\..\UnityProject\Assets\Nice1\Plugins\Windows\$(PlatformShortName)\"</Command>
@@ -143,9 +148,10 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;NDEBUG;NICE1PLUGIN_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;NICE1PLUGIN_EXPORTS;_WINDOWS;_USRDLL;CURL_STATICLIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalIncludeDirectories>$(SolutionDir)\dependencies\libcurl-vc-x64-release-static-ipv6\include\;$(SolutionDir)\dependencies\nlohmann-json\include\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -153,6 +159,8 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
+      <AdditionalLibraryDirectories>$(SolutionDir)\dependencies\libcurl-vc-x64-release-static-ipv6\lib\</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libcurl_a.lib;advapi32.lib;crypt32.lib;normaliz.lib;ws2_32.lib;wldap32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /y "$(OutDir)Nice1Plugin.dll" "$(SolutionDir)..\..\Unity Project\Assets\Plugins\Windows\$(PlatformShortName)\" &amp;&amp; xcopy /y "$(OutDir)Nice1Plugin.pdb" "$(SolutionDir)..\..\Unity Project\Assets\Plugins\Windows\$(PlatformShortName)\"</Command>
@@ -166,10 +174,11 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;NICE1PLUGIN_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;NICE1PLUGIN_EXPORTS;_WINDOWS;_USRDLL;CURL_STATICLIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <OmitFramePointers>false</OmitFramePointers>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalIncludeDirectories>$(SolutionDir)\dependencies\libcurl-vc-x64-release-static-ipv6\include\;$(SolutionDir)\dependencies\nlohmann-json\include\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -177,19 +186,13 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
+      <AdditionalLibraryDirectories>$(SolutionDir)\dependencies\libcurl-vc-x64-release-static-ipv6\lib\</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libcurl_a.lib;advapi32.lib;crypt32.lib;normaliz.lib;ws2_32.lib;wldap32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /y "$(OutDir)Nice1Plugin.dll" "$(SolutionDir)..\..\Unity Project\Assets\Plugins\Windows\$(PlatformShortName)\" &amp;&amp; xcopy /y "$(OutDir)Nice1Plugin.pdb" "$(SolutionDir)..\..\Unity Project\Assets\Plugins\Windows\$(PlatformShortName)\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-  <ImportGroup Label="ExtensionTargets">
-    <Import Project="packages\nlohmann.json.3.11.2\build\native\nlohmann.json.targets" Condition="Exists('packages\nlohmann.json.3.11.2\build\native\nlohmann.json.targets')" />
-  </ImportGroup>
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>Este proyecto hace referencia a los paquetes NuGet que faltan en este equipo. Use la restauración de paquetes NuGet para descargarlos. Para obtener más información, consulte http://go.microsoft.com/fwlink/?LinkID=322105. El archivo que falta es {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('packages\nlohmann.json.3.11.2\build\native\nlohmann.json.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\nlohmann.json.3.11.2\build\native\nlohmann.json.targets'))" />
-  </Target>
+  <ImportGroup Label="ExtensionTargets" />
 </Project>

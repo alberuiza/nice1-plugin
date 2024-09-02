@@ -1,24 +1,6 @@
+#include "Plugin.h"
 
-#if _MSC_VER 
-#define EXPORT_API __declspec(dllexport) 
-#else
-#define EXPORT_API 
-#endif
 
-// ------------------------------------------------------------------------
-#include <iostream>
-#include <stdio.h>
-#include <string>
-#include <cstring>
-#include <curl/curl.h>
-#include "json.h"
-#include "json.c"
-#include <nlohmann/json.hpp>
-#include "JsonDataContainer.h"
-
-using namespace quicktype;
-using namespace std;
-using json = nlohmann::json;
 
 extern "C"
 {
@@ -43,23 +25,24 @@ extern "C"
 		return res;
 	}
 
-	string networkEndpoints[] = {
-		"http://jungle4.greymass.com/v1/chain/get_table_rows", // Jungle4 Testnet
-		"https://eos.greymass.com/v1/chain/get_table_rows", // EOS Mainnet
-		"https://protontestnet.greymass.com/v1/chain/get_table_rows", // Proton Testnet
-		"https://proton.cryptolions.io/v1/chain/get_table_rows", // Proton Mainnet
-		"https://testnet.waxsweden.org/v1/chain/get_table_rows", // WAX Testnet
-		"https://wax.greymass.com/v1/chain/get_table_rows", // WAX Mainnet
-		"https://test.telos.eosusa.io/v1/chain/get_table_rows", // TELOS Testnet
-		"https://telos.greymass.com/v1/chain/get_table_rows" // TELOS Mainnet
-	};
+	int APITest()
+	{
+		return 4;
+	}
 
-	bool simpleAssets;
+	const char* GetUrl(const char* ownerChar, const char* authorChar, const char* categoryChar, int network)
+	{
+		string baseUrl = networkEndpoints[network];
 
-	const char* CURL_INIT_ERROR_MESSAGE = "CURL_INIT_ERROR";
-	const char* CURL_REQUEST_ERROR_MESSAGE = "CURL_REQUEST_ERROR";
+		if (simpleAssets)
+			baseUrl = baseUrl + "/v1/chain/get_account";
+		else
+			baseUrl = baseUrl + "history/get_deltas?code=simpleassets&scope=" + ownerChar;
 
-	const char* GetCurlResponse(const char* url, char* owner)
+		return MakeStringCopy(baseUrl.c_str());
+	}
+
+	const char* GetCurlResponse(const char* url, const char* owner)
 	{
 		CURL* curl;
 		CURLcode response;
@@ -99,6 +82,64 @@ extern "C"
 		else {
 			return MakeStringCopy(CURL_INIT_ERROR_MESSAGE);
 		}
+	}
+
+	const char* GetAuthorNameSimpleAssets(JsonNode* element)
+	{
+		char* author = nullptr;
+		JsonNode* authorMember = json_find_member(element, "author");
+		if (IsValid(authorMember) && authorMember->tag == JSON_STRING) {
+			author = authorMember->string_;
+		}
+
+		JsonNode* tmp;
+		json_foreach(tmp, element)
+		{
+			if (IsValid(tmp) && tmp->tag == JSON_OBJECT)
+			{
+				JsonNode* nameMember = json_find_member(tmp, "name");
+				if (IsValid(nameMember) && nameMember->tag == JSON_STRING) {
+					char* name = nameMember->string_;
+					strcat_s(author, strlen(name) + 1, name);
+					break;
+				}
+			}
+		}
+
+		free(tmp);
+		return author;
+	}
+
+	const char* GetAuthorNameDeltas(JsonNode* element)
+	{
+		JsonNode* data = json_find_member(element, "data");
+
+		if (IsValid(data) && data->tag == JSON_OBJECT)
+		{
+			char* author = nullptr;
+			JsonNode* authorMember = json_find_member(data, "author");
+			if (IsValid(authorMember) && authorMember->tag == JSON_STRING) {
+				author = authorMember->string_;
+			}
+
+			char* idata = nullptr;
+			JsonNode* idataMember = json_find_member(data, "idata");
+			if (IsValid(idataMember) && idataMember->tag == JSON_STRING) {
+				idata = idataMember->string_;
+
+				string name = idata;
+				int index = name.find(":");
+				name = name.substr(index + 1, name.length() - index - 1);
+				index = name.find("\"");
+				name = name.substr(index + 1, name.length() - index - 1);
+				index = name.find("\"");
+				name = name.substr(0, index);
+
+				strcat_s(author, strlen(name.c_str()) + 1, name.c_str());
+			}
+			return author;
+		}
+		return "";
 	}
 
 	const char* GetLicenseFromJsonData(const char* curlResponse, const char* licenseCheck, char* category)
@@ -160,7 +201,7 @@ extern "C"
 
 	const char* CheckNice1GenesisKey(char* owner, int network)
 	{
-		static char* author_genesisKey = MakeStringCopy("niceonedemos");
+		static char* author_genesisKey = MakeStringCopy("niceonechain");
 		static char* category_genesisKey = MakeStringCopy("niceoneepics");
 		static char* idata_name_genesisKey = MakeStringCopy("NICE1 Genesis Key");
 
@@ -171,7 +212,7 @@ extern "C"
 	{
 		if (network == 0 || network == 1 || network == 3 || network == 7) simpleAssets = true;
 		else simpleAssets = false;
-		
+
 		if (checkNice1GenesisKey == 1)
 		{
 			const char* response = CheckNice1GenesisKey(owner, network);

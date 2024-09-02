@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "CppUnitTest.h"
+#include "../Plugin.h"
 #include "../Plugin.cpp"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
