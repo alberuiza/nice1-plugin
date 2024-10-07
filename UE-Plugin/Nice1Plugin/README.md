@@ -10,3 +10,6 @@ To ensure the Nice1 plugin functions correctly, you need to provide the necessar
 1. Launch Unreal Editor: Open your project in Unreal Engine.
 2. Navigate to Settings: Go to Edit -> Project Settings -> Nice1 Settings.
 3. Enter Required Information: Fill out all the fields with the appropriate license and network details.
+
+## Blueprint example
+![alt text](https://github.com/nice1-blockchain/nice1-plugin/blob/develop/UE-Plugin/Nice1Plugin/Documentation/BlueprintExample.jpg?raw=true)

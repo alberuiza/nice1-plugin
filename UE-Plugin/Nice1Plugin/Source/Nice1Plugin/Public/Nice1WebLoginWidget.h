@@ -11,7 +11,7 @@ class UNice1WebLoginHandler;
 /**
  * UWebBrowser derived class used for login 
  */
-UCLASS(HideCategories = (Appearance))
+UCLASS(/*HideCategories = (Appearance)*/)
 class NICE1PLUGIN_API UNice1WebLoginWidget : public UWebBrowser
 {
 	GENERATED_BODY()

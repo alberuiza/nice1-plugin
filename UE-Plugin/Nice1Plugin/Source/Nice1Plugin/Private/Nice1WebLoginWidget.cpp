@@ -24,7 +24,7 @@ TSharedRef<SWidget> UNice1WebLoginWidget::RebuildWidget()
 
 	if (WebBrowserWidget)
 	{
-		FString RelativePath = FPaths::ProjectContentDir() + TEXT("WebView/index.html");
+		FString RelativePath = FPaths::ProjectPluginsDir() + TEXT("Nice1Plugin\\Content\\index.html");
 		FString AbsolutePath = FPaths::ConvertRelativePathToFull(RelativePath);
 		InitialURL = AbsolutePath;
 		bSupportsTransparency = false;
