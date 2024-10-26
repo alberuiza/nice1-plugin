@@ -19,8 +19,10 @@ using Action = EosSharp.Core.Api.v1.Action;
 
 namespace Assets.Packages.CloudWalletUnity.Src
 {
-#if UNITY_ANDROID || UNITY_IOS
-using Universal.UniversalSDK;
+#if UNITY_IOS
+    /// <summary>
+    /// using Universal.UniversalSDK;
+    /// </summary>
 #endif
 
     public class ActionConfigWrapper
@@ -517,15 +519,15 @@ using Universal.UniversalSDK;
         #endregion
 
         #region Mobile
-#if (UNITY_ANDROID || UNITY_IOS)
+#if (UNITY_IOS)
 
-    private UniversalSDK _universalSdk;
+    //private UniversalSDK _universalSdk;
 
     public void OpenCustomTabView(string url)
     {
         try
         {
-            _universalSdk.OpenCustomTabView(url, result =>
+            /*_universalSdk.OpenCustomTabView(url, result =>
             {
                 result.Match(
                     value =>
@@ -536,13 +538,14 @@ using Universal.UniversalSDK;
                     {
                         Debug.LogError(error);
                     });
-            });
+            });*/
         }
         catch (Exception e)
         {
             Debug.LogError(e);;
         }
     }
+
 #endif
         #endregion
 
@@ -690,24 +693,31 @@ using Universal.UniversalSDK;
             _localUrl = $"http://127.0.0.1:{localPort}/";
             _remoteUrl = CloudWalletSigningWebsiteUrl;
 #endif
-#if (UNITY_ANDROID || UNITY_IOS)
-        _universalSdk = new GameObject(nameof(UniversalSDK)).AddComponent<UniversalSDK>();
+#if (UNITY_IOS)
+        //_universalSdk = new GameObject(nameof(UniversalSDK)).AddComponent<UniversalSDK>();
 #endif
         }
 
         #region Mobile
-#if UNITY_IOS || UNITY_ANDROID
+#if UNITY_IOS
     
     public void StartBrowserCommunication(string url)
     {
         StartHttpListener();
         OpenCustomTabView(url);
     }
-    
+#elif UNITY_ANDROID
+    public void StartBrowserCommunication(string url)
+    {
+            StartHttpListener();
+            //OpenCustomTabView(url);
+            Debug.LogWarning("TO DO");
+
+    }
 #endif
         #endregion
 
-#if (UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN)  && (!UNITY_WEBGL && !UNITY_IOS && !UNITY_ANDROID)
+#if (UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN) && (!UNITY_WEBGL && !UNITY_IOS && !UNITY_ANDROID)
         private void StartBrowserCommunication(string url)
         {
             _unityWindow = GetActiveWindow();
