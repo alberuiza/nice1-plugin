@@ -20,7 +20,9 @@ using Action = EosSharp.Core.Api.v1.Action;
 namespace Assets.Packages.CloudWalletUnity.Src
 {
 #if UNITY_IOS
-    using Universal.UniversalSDK;
+    /// <summary>
+    /// using Universal.UniversalSDK;
+    /// </summary>
 #endif
 
     public class ActionConfigWrapper
@@ -519,13 +521,13 @@ namespace Assets.Packages.CloudWalletUnity.Src
         #region Mobile
 #if (UNITY_IOS)
 
-    private UniversalSDK _universalSdk;
+    //private UniversalSDK _universalSdk;
 
     public void OpenCustomTabView(string url)
     {
         try
         {
-            _universalSdk.OpenCustomTabView(url, result =>
+            /*_universalSdk.OpenCustomTabView(url, result =>
             {
                 result.Match(
                     value =>
@@ -536,7 +538,7 @@ namespace Assets.Packages.CloudWalletUnity.Src
                     {
                         Debug.LogError(error);
                     });
-            });
+            });*/
         }
         catch (Exception e)
         {
@@ -692,7 +694,7 @@ namespace Assets.Packages.CloudWalletUnity.Src
             _remoteUrl = CloudWalletSigningWebsiteUrl;
 #endif
 #if (UNITY_IOS)
-        _universalSdk = new GameObject(nameof(UniversalSDK)).AddComponent<UniversalSDK>();
+        //_universalSdk = new GameObject(nameof(UniversalSDK)).AddComponent<UniversalSDK>();
 #endif
         }
 
