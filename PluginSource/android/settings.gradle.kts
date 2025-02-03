@@ -13,6 +13,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "android"
+rootProject.name = "androidplugin"
 include(":app")
-include(":cppLib")
+include(":cpplib")
