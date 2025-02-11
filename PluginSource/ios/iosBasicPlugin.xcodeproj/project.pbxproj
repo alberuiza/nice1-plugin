@@ -7,10 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D3AFDEC72D5B0B4000C9703F /* curl.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3AFDEC62D5B0B4000C9703F /* curl.xcframework */; };
 		D3B54CCC2D54743D00E34443 /* Plugin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3B54CCB2D54743D00E34443 /* Plugin.cpp */; };
+		D3B66A8F2D59B11500CA087E /* json.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D3B66A8B2D59B11500CA087E /* json.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		D3AFDEC92D5B0B4000C9703F /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D3B54CB92D5473FA00E34443 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -23,8 +35,13 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		D3AFDEC62D5B0B4000C9703F /* curl.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = curl.xcframework; path = ../../../curl.xcframework; sourceTree = "<group>"; };
 		D3B54CBB2D5473FA00E34443 /* libiosBasicPlugin.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libiosBasicPlugin.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3B54CCB2D54743D00E34443 /* Plugin.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Plugin.cpp; sourceTree = "<group>"; };
+		D3B66A8A2D59B11500CA087E /* json.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = json.h; sourceTree = "<group>"; };
+		D3B66A8B2D59B11500CA087E /* json.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = json.cpp; sourceTree = "<group>"; };
+		D3B66A8C2D59B11500CA087E /* JsonDataContainer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JsonDataContainer.h; sourceTree = "<group>"; };
+		D3B66A8D2D59B11500CA087E /* json.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = json.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,6 +49,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3AFDEC72D5B0B4000C9703F /* curl.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -42,6 +60,11 @@
 			isa = PBXGroup;
 			children = (
 				D3B54CCB2D54743D00E34443 /* Plugin.cpp */,
+				D3B66A8A2D59B11500CA087E /* json.h */,
+				D3B66A8B2D59B11500CA087E /* json.cpp */,
+				D3B66A8C2D59B11500CA087E /* JsonDataContainer.h */,
+				D3B66A8E2D59B11500CA087E /* nlohmann */,
+				D3B66A912D59B9EF00CA087E /* Frameworks */,
 				D3B54CBC2D5473FA00E34443 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -54,6 +77,22 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		D3B66A8E2D59B11500CA087E /* nlohmann */ = {
+			isa = PBXGroup;
+			children = (
+				D3B66A8D2D59B11500CA087E /* json.hpp */,
+			);
+			path = nlohmann;
+			sourceTree = "<group>";
+		};
+		D3B66A912D59B9EF00CA087E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D3AFDEC62D5B0B4000C9703F /* curl.xcframework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -64,6 +103,7 @@
 				D3B54CB72D5473FA00E34443 /* Sources */,
 				D3B54CB82D5473FA00E34443 /* Frameworks */,
 				D3B54CB92D5473FA00E34443 /* CopyFiles */,
+				D3AFDEC92D5B0B4000C9703F /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -116,6 +156,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D3B54CCC2D54743D00E34443 /* Plugin.cpp in Sources */,
+				D3B66A8F2D59B11500CA087E /* json.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -174,6 +215,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "/Users/alberto/Projects/curl.framework/**";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
@@ -229,6 +271,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "/Users/alberto/Projects/curl.framework/**";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
@@ -244,7 +287,11 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2SQBE546D9;
-				OTHER_LDFLAGS = "-ObjC";
+				HEADER_SEARCH_PATHS = "/Users/alberto/Projects/curl.framework/**";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-lcurl",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -259,7 +306,11 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2SQBE546D9;
-				OTHER_LDFLAGS = "-ObjC";
+				HEADER_SEARCH_PATHS = "/Users/alberto/Projects/curl.framework/**";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-lcurl",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 6.0;

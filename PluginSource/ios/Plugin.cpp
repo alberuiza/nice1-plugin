@@ -7,6 +7,13 @@
 #include <assert.h>
 #include <stdint.h>
 #include <stdlib.h>
+#include <memory>
+#include "curl/curl.h"
+#include "json.h"
+#include "JsonDataContainer.h"
+
+using namespace quicktype;
+using json = nlohmann::json;
 
 extern "C" {
 
@@ -48,15 +55,15 @@ extern "C" {
     }
 
 
-    /*const char* GetCurlResponse(const char* url, const char* owner)
+    const char* GetCurlResponse(const char* url, const char* owner)
     {
         CURL* curl;
         CURLcode response;
-        unique_ptr<string> httpData(new string());
+        std::unique_ptr<std::string> httpData(new std::string());
 
-        string own = owner;
+        std::string own = owner;
 
-        string jsonstr = "{\r\n    \"json\": true,\r\n    \"code\": \"simpleassets\",\r\n    \"scope\": \"" + own + "\",\r\n    \"table\": \"sassets\",\r\n    \"index position\": \"secondary\",\r\n    \"key type\": \"name\",\r\n    \"lower bound\": \"niceonedemos\",\r\n    \"upper bound\": \"niceonedemos\",\r\n    \"limit\": 100,\r\n    \"reverse\": false,\r\n    \"show_payer\": false\r\n}";
+        std::string jsonstr = "{\r\n    \"json\": true,\r\n    \"code\": \"simpleassets\",\r\n    \"scope\": \"" + own + "\",\r\n    \"table\": \"sassets\",\r\n    \"index position\": \"secondary\",\r\n    \"key type\": \"name\",\r\n    \"lower bound\": \"niceonedemos\",\r\n    \"upper bound\": \"niceonedemos\",\r\n    \"limit\": 100,\r\n    \"reverse\": false,\r\n    \"show_payer\": false\r\n}";
 
         curl_global_init(CURL_GLOBAL_ALL);
         curl = curl_easy_init();
@@ -88,9 +95,9 @@ extern "C" {
         else {
             return MakeStringCopy(CURL_INIT_ERROR_MESSAGE);
         }
-    }*/
+    }
 
-    /*const char* GetLicenseFromJsonData(const char* curlResponse, const char* licenseCheck, const char* category)
+    const char* GetLicenseFromJsonData(const char* curlResponse, const char* licenseCheck, const char* category)
     {
         JsonDataContainer jsonData = json::parse(curlResponse);
 
@@ -104,13 +111,11 @@ extern "C" {
         // We filter each row of the JSON
         for (Row row : jsonData.get_rows())
         {
-            __android_log_print(ANDROID_LOG_DEBUG, "Nice1", "row: %s", row.get_idata().get_complete().c_str());
-            __android_log_print(ANDROID_LOG_DEBUG, "Nice1", "row category: %s", row.get_category().c_str());
             // Comparing the category
             if (strcmp(row.get_category().c_str(), category) == 0)
             {
                 // If the category matches, we compare it with the license
-                string licenseData = row.get_author() + row.get_idata().get_name();
+                std::string licenseData = row.get_author() + row.get_idata().get_name();
                 if (strcmp(licenseData.c_str(), licenseCheck) == 0) {
                     license = true;
                     break;
@@ -127,7 +132,7 @@ extern "C" {
         else
             return "ERROR LICENSE";
 
-    }*/
+    }
 
    const char* CheckLicense(const char* owner, const char* author, const char* category, const char* license_name, int network)
     {
@@ -135,9 +140,9 @@ extern "C" {
         const char* url = MakeStringCopy(networkEndpoints[network].c_str());
 
 
-        //const char* curlResponse = GetCurlResponse(url, owner);
-        //if (strcmp(curlResponse, CURL_INIT_ERROR_MESSAGE) == 0) return CURL_INIT_ERROR_MESSAGE;
-        //if (strcmp(curlResponse, CURL_REQUEST_ERROR_MESSAGE) == 0) return CURL_REQUEST_ERROR_MESSAGE;
+        const char* curlResponse = GetCurlResponse(url, owner);
+        if (strcmp(curlResponse, CURL_INIT_ERROR_MESSAGE) == 0) return CURL_INIT_ERROR_MESSAGE;
+        if (strcmp(curlResponse, CURL_REQUEST_ERROR_MESSAGE) == 0) return CURL_REQUEST_ERROR_MESSAGE;
 
        std::string ownerC = owner;
        std::string authorC = author;
@@ -150,7 +155,7 @@ extern "C" {
         char* result = new char[response.size() + 1];
         strcpy(result, response.c_str());
 
-       return result; //GetLicenseFromJsonData(curlResponse, licenseCheck.c_str(), category);
+       return GetLicenseFromJsonData(curlResponse, licenseCheck.c_str(), category);
     }
 
     const char* CheckNice1GenesisKey(const char* owner, int network)
