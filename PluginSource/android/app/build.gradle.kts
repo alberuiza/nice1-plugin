@@ -4,6 +4,7 @@ plugins {
 }
 
 android {
+
     namespace = "com.a3in.androidplugin"
     compileSdk = 35
 

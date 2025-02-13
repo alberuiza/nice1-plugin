@@ -3,6 +3,13 @@ plugins {
     id("org.jetbrains.kotlin.android")
 }
 
+tasks.register("printVersion") {
+    doLast {
+        println("NDK version: ${android.ndkVersion}")
+    }
+}
+
+
 android {
     namespace = "com.a3in.cpplib"
     compileSdk = 35
